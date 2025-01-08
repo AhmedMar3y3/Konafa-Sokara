@@ -25,12 +25,13 @@ return new class extends Migration
             $table->boolean('is_notify')->default(false);
             $table->string('owned_referral_code');
             $table->string('used_referral_code')->nullable();
-            $table->decimal('lat',20,18)->nullable();
-            $table->decimal('lng',20,18)->nullable();
+            $table->string('lat')->nullable();
+            $table->string('lng')->nullable();
             $table->string('map_desc')->nullable();
             $table->string('title')->nullable();
             $table->string('code')->nullable();
             $table->dateTime('code_expire')->nullable();
+            $table->boolean('is_verified')->default(false);
             $table->integer('points')->default(0);
             $table->boolean('rated_app')->default(false);
             $table->softDeletes();

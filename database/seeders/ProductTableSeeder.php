@@ -27,7 +27,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => true,
                 'discount_price'  => 12.00,
                 'avg_rate'        => 4.5,
-                'apply_prize'     => true,
+                'can_apply_prize'     => true,
                 'points'          => '20',
                 'category_id'     => 1, // حلوي شرقي
                 'sub_category_id' => 5, // البقلاوة
@@ -46,7 +46,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => false,
                 'discount_price'  => null,
                 'avg_rate'        => 4.0,
-                'apply_prize'     => true,
+                'can_apply_prize'     => true,
                 'points'          => '50',
                 'category_id'     => 2, // كيك
                 'sub_category_id' => 11, // كيك الشوكولاتة
@@ -65,7 +65,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => true,
                 'discount_price'  => 15.00,
                 'avg_rate'        => 4.2,
-                'apply_prize'     => false,
+                'can_apply_prize'     => false,
                 'points'          => null,
                 'category_id'     => 3, // كحك و بسكويت
                 'sub_category_id' => 18, // كحك السادة
@@ -84,7 +84,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => false,
                 'discount_price'  => null,
                 'avg_rate'        => 4.7,
-                'apply_prize'     => false,
+                'can_apply_prize'     => false,
                 'points'          => null,
                 'category_id'     => 4, // مخبوزات
                 'sub_category_id' => 24, // خبز الباجيت
@@ -102,7 +102,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => true,
                 'discount_price'  => 10.00,
                 'avg_rate'        => 4.3,
-                'apply_prize'     => true,
+                'can_apply_prize'     => true,
                 'points'          => '15',
                 'category_id'     => 2, // كيك
                 'sub_category_id' => 12, // كيك الفانيليا
@@ -121,7 +121,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => false,
                 'discount_price'  => null,
                 'avg_rate'        => 4.6,
-                'apply_prize'     => false,
+                'can_apply_prize'     => false,
                 'points'          => null,
                 'category_id'     => 2, // كيك
                 'sub_category_id' => 13, // كيك الفواكه
@@ -140,7 +140,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => true,
                 'discount_price'  => 15.50,
                 'avg_rate'        => 4.8,
-                'apply_prize'     => true,
+                'can_apply_prize'     => true,
                 'points'          => '20',
                 'category_id'     => 4, // مخبوزات
                 'sub_category_id' => 26, // الكرواسون
@@ -159,7 +159,7 @@ class ProductTableSeeder extends Seeder
                 'has_discount'    => false,
                 'discount_price'  => null,
                 'avg_rate'        => 4.4,
-                'apply_prize'     => false,
+                'can_apply_prize'     => false,
                 'points'          => null,
                 'category_id'     => 4, // مخبوزات
                 'sub_category_id' => 28, // فطائر الجبن

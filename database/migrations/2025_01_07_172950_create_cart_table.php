@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('quantity');
-            $table->boolean('is_free')->default(false);
+            $table->integer('free_quantity')->default(0);
+            $table->integer('used_points')->default(0);
         });
     }
 

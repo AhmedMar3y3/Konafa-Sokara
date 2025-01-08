@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('map_desc');
             $table->string('title');
             $table->decimal('price');
-            $table->integer('vat_per');
-            $table->decimal('vat_amount');
+            $table->integer('vat_per')->nullable();
+            $table->decimal('vat_amount')->nullable();
             $table->decimal('delivery_price');
             $table->decimal('total_price');
             $table->tinyInteger('status')->default(0);
