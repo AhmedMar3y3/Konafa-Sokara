@@ -1,22 +1,35 @@
 <?php
 
 namespace App\Traits;
+
 trait HttpResponses
 {
-    public function successResponse($data = null, $message = 'Success', $statusCode = 200)
+    public function successResponse($data = null, $message = 'Success', $statusCode = 200, $key = 'success')
     {
-        return response()->json([
-            'success' => true,
+        $response = [
+            'key' => $key,
             'message' => $message,
             'data' => $data,
-        ], $statusCode);
-    }
+        ];
 
+        if ($data instanceof \App\Http\Resources\UserResource) {
+            $user = $data->resource;
+
+            if (!$user->is_active) {
+                $response['key'] = 'ActivationNeeded';
+            } elseif (!$user->completed_info) {
+                $response['key'] = 'CompletionNeeded';
+            }
+        }
+
+
+        return response()->json($response, $statusCode);
+    }
 
     public function failureResponse($message = 'Failure', $statusCode = 400)
     {
         return response()->json([
-            'success' => false,
+            'key' => 'failed',
             'message' => $message,
             'data' => null,
         ], $statusCode);

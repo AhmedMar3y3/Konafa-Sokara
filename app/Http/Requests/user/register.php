@@ -31,4 +31,12 @@ class register extends FormRequest
             'country_code' => 'required|string',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'phone.unique' => 'The phone has already been taken.',
+            'email.unique' => 'The email has already been taken.',
+        ];
+    }
 }

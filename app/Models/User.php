@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phone',
         'country_code',
         'email',
+        'birth_date',
         'password',
         'is_active',
         'completed_info',
