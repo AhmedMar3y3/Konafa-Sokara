@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,9 +20,26 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'phone',
+        'country_code',
         'email',
         'password',
+        'is_active',
+        'completed_info',
+        'is_notify',
+        'owned_referral_code',
+        'used_referral_code',
+        'lat',
+        'lng',
+        'map_desc',
+        'title',
+        'code',
+        'code_expire',
+        'is_verified',
+        'points',
+        'rated_app',
     ];
 
     /**
@@ -40,6 +59,55 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'code_expire' => 'datetime',
+        'is_active' => 'boolean',
+        'completed_info' => 'boolean',
+        'is_notify' => 'boolean',
+        'is_verified' => 'boolean',
+        'rated_app' => 'boolean',
     ];
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+
+    public static function generateReferralCode()
+    {
+        return Str::random(8);
+    }
+
+    public function isCodeExpired()
+    {
+        return $this->code_expire && now()->gt($this->code_expire);
+    }
+
+
+    public function updateLocation(string $lat, string $lng, string $map_desc): void
+    {
+        $this->update([
+            'lat' => $lat,
+            'lng' => $lng,
+            'map_desc' => $map_desc,
+            'completed_info' => true,
+        ]);
+    }
+
+    public function markAsVerified()
+    {
+        $this->update([
+            'is_verified' => true,
+            'is_active' => true,
+            'code' => null,
+            'code_expire' => null,
+        ]);
+    }
+
+    public function resendVerificationCode()
+    {
+        $this->update([
+            'code' => '123456', // Static code for testing
+            'code_expire' => now()->addMinutes(1), // Code expires in 1 minute
+        ]);
+    }
 }
