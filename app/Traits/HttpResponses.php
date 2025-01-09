@@ -4,33 +4,45 @@ namespace App\Traits;
 
 trait HttpResponses
 {
-    public function successResponse($data = null, $message = 'Success', $statusCode = 200, $key = 'success')
-    {
-        $response = [
+
+    public function response($key,$message,$data = '',$statusCode){
+
+        return response()->json([
             'key' => $key,
-            'message' => $message,
-            'data' => $data,
-        ];
-
-        if ($data instanceof \App\Http\Resources\UserResource) {
-            $user = $data->resource;
-
-            if (!$user->is_active) {
-                $response['key'] = 'ActivationNeeded';
-            } elseif (!$user->completed_info) {
-                $response['key'] = 'CompletionNeeded';
-            }
-        }
+            'msg' => $message,
+            'data' => $data
+        ], $statusCode);
+    }
 
 
-        return response()->json($response, $statusCode);
+    public function successResponse($key,$message,$data, $statusCode = 200,)
+    {
+        // $response = [
+        //     'key' => $key,
+        //     'message' => $message,
+        //     'data' => $data,
+        // ];
+
+        // if ($data instanceof \App\Http\Resources\UserResource) {
+        //     $user = $data->resource;
+
+        //     if (!$user->is_active) {
+        //         $response['key'] = 'ActivationNeeded';
+        //     } elseif (!$user->completed_info) {
+        //         $response['key'] = 'CompletionNeeded';
+        //     }
+        // }
+
+
+        return $this->response('success', $message = 'تم الارسال بنجاح', $data, 200);
+    }
+
+    public function successWithDataResponse($data){
+        return $this->response('success', $message = 'تم الارسال بنجاح', $data, 200);
     }
 
     public function failureResponse($message = 'Failure', $statusCode = 400)
     {
-        return response()->json([
-            'key' => 'failed',
-            'message' => $message,
-        ], $statusCode);
+        return $this->response('failure', $message, '', $statusCode);
     }
 }

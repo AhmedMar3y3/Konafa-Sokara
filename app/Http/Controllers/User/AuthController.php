@@ -3,35 +3,26 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\user\Auth\RegisterRequest;
 use App\Http\Requests\user\location;
-use App\Http\Requests\user\register;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use App\Notifications\sendVerifyCode;
-
-
 
 class AuthController extends Controller
 {
     use HttpResponses;
 
     // Register user
-    public function register(register $request)
+    public function register(RegisterRequest $request)
     {
-        $validatedData = $request->validated();
-        $validatedData['code'] = '123456';
-        $validatedData['code_expire'] = now()->addMinutes(1);
-        $validatedData['owned_referral_code'] = User::generateReferralCode();
+        $user = User::create($request->validated());
 
-        $user = User::create($validatedData);
+        $user->sendVerificationCode();
 
-        $user->notify(new sendVerifyCode($user->code));
-        return $this->successResponse(new UserResource($user), 'Successfully registered, Please Verify Your email', 201);
+        return $this->successWithDataResponse(new UserResource($user));
     }
 
     // Verify email
@@ -45,20 +36,21 @@ class AuthController extends Controller
         $user = User::where('phone', $request->phone)->first();
 
         if (!$user) {
-            return $this->failureResponse('User not found', 404);
+            return $this->failureResponse('User not found');
         }
 
         if ($user->code !== $request->code) {
-            return $this->failureResponse('Invalid code', 400);
+            return $this->failureResponse('Invalid code');
         }
 
         if ($user->isCodeExpired()) {
-            return $this->failureResponse('The code is expired', 400);
+            return $this->failureResponse('The code is expired');
         }
 
         $user->markAsVerified();
+        $token = $user->createToken('user-token')->plainTextToken;
 
-        return $this->successResponse(new UserResource($user), 'Email verified successfully');
+        return $this->successWithDataResponse(UserResource::make($user)->setToken($token));
     }
 
 
@@ -76,7 +68,7 @@ class AuthController extends Controller
             return $this->failureResponse('Code is still valid', 400);
         }
 
-        $user->resendVerificationCode();
+        $user->sendVerificationCode();
 
         return $this->successResponse(null, 'Code resent successfully');
     }

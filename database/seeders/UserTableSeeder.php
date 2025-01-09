@@ -24,6 +24,7 @@ class UserTableSeeder extends Seeder
                 'email'                 => $faker->unique()->email,
                 'password'              => bcrypt('123456789'),
                 'owned_referral_code'   => $faker->unique()->randomNumber(6),
+                'birth_date'            => $faker->date(),
             ];
         }
         User::insert($data);

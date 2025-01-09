@@ -3,16 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Services\Auth\SendVerificationCodeService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -97,18 +99,28 @@ class User extends Authenticatable
     public function markAsVerified()
     {
         $this->update([
-            'is_verified' => true,
             'is_active' => true,
             'code' => null,
             'code_expire' => null,
         ]);
     }
 
-    public function resendVerificationCode()
+    public function sendVerificationCode()
     {
         $this->update([
             'code' => '123456',
             'code_expire' => now()->addMinutes(1),
         ]);
+
+        (new SendVerificationCodeService())->sendCodeToUser($this);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->owned_referral_code = self::generateReferralCode();
+        });
     }
 }
