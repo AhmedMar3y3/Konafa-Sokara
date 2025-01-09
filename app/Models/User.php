@@ -115,6 +115,11 @@ class User extends Authenticatable
         (new SendVerificationCodeService())->sendCodeToUser($this);
     }
 
+    public function login(){
+        $token = $this->createToken('user-token')->plainTextToken;
+        return $token;
+    }
+
     protected static function boot()
     {
         parent::boot();

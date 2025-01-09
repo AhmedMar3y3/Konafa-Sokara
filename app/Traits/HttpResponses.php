@@ -15,30 +15,26 @@ trait HttpResponses
     }
 
 
-    public function successResponse($key,$message,$data, $statusCode = 200,)
+    public function successResponse($key,$message,$data, $statusCode = 200)
     {
-        // $response = [
-        //     'key' => $key,
-        //     'message' => $message,
-        //     'data' => $data,
-        // ];
-
-        // if ($data instanceof \App\Http\Resources\UserResource) {
-        //     $user = $data->resource;
-
-        //     if (!$user->is_active) {
-        //         $response['key'] = 'ActivationNeeded';
-        //     } elseif (!$user->completed_info) {
-        //         $response['key'] = 'CompletionNeeded';
-        //     }
-        // }
-
-
-        return $this->response('success', $message = 'تم الارسال بنجاح', $data, 200);
+        return $this->response('success', $message = 'تم بنجاح', $data, 200);
     }
 
     public function successWithDataResponse($data){
-        return $this->response('success', $message = 'تم الارسال بنجاح', $data, 200);
+        return $this->response('success', $message = 'تم بنجاح', $data, 200);
+    }
+    public function inactiveUserResponse($data)
+    {
+        return $this->response('ActivationNeeded', $message = 'يرجي تأكيد الحساب', $data, $statusCode = 200);
+    }
+    public function incompletedUserResponse($data)
+    {
+        return $this->response('CompletetionNeeded', $message = 'يرجي إكمال البيانات', $data, $statusCode = 200);
+    }
+    
+    public function successWithMessageResponse($message)
+    {
+        return $this->response('success', $message, '', $statusCode = 200);
     }
 
     public function failureResponse($message = 'Failure', $statusCode = 400)
