@@ -31,7 +31,6 @@ trait HttpResponses
         return response()->json([
             'key' => 'failed',
             'message' => $message,
-            'data' => null,
         ], $statusCode);
     }
 }

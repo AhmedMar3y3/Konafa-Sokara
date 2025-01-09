@@ -22,5 +22,5 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'birth_date' => $this->birth_date,
         ];
-        }
+    }
 }

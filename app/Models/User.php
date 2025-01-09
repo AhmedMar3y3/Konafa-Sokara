@@ -107,8 +107,8 @@ class User extends Authenticatable
     public function resendVerificationCode()
     {
         $this->update([
-            'code' => '123456', // Static code for testing
-            'code_expire' => now()->addMinutes(1), // Code expires in 1 minute
+            'code' => '123456',
+            'code_expire' => now()->addMinutes(1),
         ]);
     }
 }
