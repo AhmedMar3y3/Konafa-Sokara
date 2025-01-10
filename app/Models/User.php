@@ -102,6 +102,15 @@ class User extends Authenticatable
         ]);
     }
 
+    public function updatePassword($password){
+        $this->update([
+            'password' => $password,
+            'code' => null,
+            'code_expire' => null,
+            'is_verified' => false,
+        ]);
+    }
+
     public function sendVerificationCode()
     {
         $this->update([
@@ -109,7 +118,7 @@ class User extends Authenticatable
             'code_expire' => now()->addMinutes(1),
         ]);
 
-        (new SendVerificationCodeService())->sendCodeToUser($this);
+        // (new SendVerificationCodeService())->sendCodeToUser($this);
     }
 
     public function login(){

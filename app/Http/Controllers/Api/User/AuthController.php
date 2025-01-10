@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\user\Auth\ResendCodeRequest;
-use App\Http\Requests\user\Auth\LoginUserRequest;
-use App\Http\Requests\user\Auth\RegisterRequest;
-use App\Http\Requests\user\Auth\VerifyUserRequest;
-use App\Http\Requests\user\Auth\LocationRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\user\Auth\LocationRequest;
+use App\Http\Requests\Api\User\Auth\RegisterRequest;
+use App\Http\Requests\Api\User\Auth\LoginUserRequest;
+use App\Http\Requests\Api\User\Auth\ResendCodeRequest;
+use App\Http\Requests\Api\User\Auth\VerifyUserRequest;
 
 class AuthController extends Controller
 {
@@ -64,7 +64,7 @@ class AuthController extends Controller
         }
 
         $user->sendVerificationCode();
-        return $this->successWithDataResponse('');
+        return $this->successResponse();
     }
 
 
@@ -99,6 +99,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return $this->successWithMessageResponse('تم تسجيل الخروج بنجاح');
+        return $this->successResponse('تم تسجيل الخروج بنجاح');
     }
 }

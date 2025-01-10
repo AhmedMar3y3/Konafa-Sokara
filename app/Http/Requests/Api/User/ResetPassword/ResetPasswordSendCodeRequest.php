@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\user\Auth;
+namespace App\Http\Requests\Api\User\ResetPassword;
 
 use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class VerifyUserRequest extends BaseRequest
+class ResetPasswordSendCodeRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -16,12 +16,11 @@ class VerifyUserRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'phone' => [
+            'email' => [
                 'required',
-                'numeric',
-                Rule::exists('users', 'phone')->whereNull('deleted_at'),
-            ],
-            'code' => ['required', 'numeric'],
+                'email',
+                Rule::exists('users', 'email')->whereNull('deleted_at'),
+            ]
         ];
     }
 }

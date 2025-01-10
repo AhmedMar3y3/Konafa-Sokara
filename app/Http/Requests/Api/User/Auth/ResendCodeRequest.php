@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Requests\user\Auth;
+namespace App\Http\Requests\Api\User\Auth;
 
-use App\Http\Requests\BaseRequest;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\BaseRequest;
 
-class LoginUserRequest extends BaseRequest
+class ResendCodeRequest extends BaseRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -21,7 +19,6 @@ class LoginUserRequest extends BaseRequest
                 'required',
                 'numeric',
                 Rule::exists('users', 'phone')->whereNull('deleted_at')],
-            'password' => ['required', 'string'],
         ];
     }
 }

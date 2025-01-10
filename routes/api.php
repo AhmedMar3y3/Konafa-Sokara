@@ -2,9 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\AuthController;
-
-
+use App\Http\Controllers\Api\User\AuthController;
+use App\Http\Controllers\Api\User\ResetPasswordController;
 
 Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@register');
 
@@ -14,6 +13,12 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/verify-email', [AuthController::class, 'verifyEmail']);
 Route::post('/resend-code', [AuthController::class, 'resendCode']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// reset password //
+Route::post('/reset-password-send-code'     ,[ResetPasswordController::class, 'sendCode']);
+Route::post('/reset-password-check-code'    ,[ResetPasswordController::class, 'checkCode']);
+Route::post('/reset-password'               ,[ResetPasswordController::class, 'resetPassword']);
+// reset password //
 
 //protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
