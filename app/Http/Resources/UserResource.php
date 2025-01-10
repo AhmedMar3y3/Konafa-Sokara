@@ -12,6 +12,14 @@ class UserResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+
+    private $token;
+    public function setToken($token){
+        $this->token = $token;
+
+        return $this;
+    }
+
     public function toArray(Request $request): array
     {
         return [
@@ -20,7 +28,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'country_code' => $this->country_code,
             'phone' => $this->phone,
-            'birthdate' => $this->birthdate,
+            'birth_date' => $this->birth_date,
+            'token' => $this->token ?? "",
         ];
-        }
+    }
 }

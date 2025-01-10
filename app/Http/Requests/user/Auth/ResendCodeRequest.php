@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\user;
+namespace App\Http\Requests\user\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class location extends FormRequest
+class ResendCodeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,7 @@ class location extends FormRequest
     public function rules(): array
     {
         return [
-            'lat'      => 'required|string',
-            'lng'      => 'required|string',
-            'map_desc' => 'required|string',
+            'phone' => ['required','numeric'],
         ];
     }
 }
