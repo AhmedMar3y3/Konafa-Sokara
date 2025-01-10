@@ -2,19 +2,12 @@
 
 namespace App\Http\Requests\user\Auth;
 
+use App\Http\Requests\BaseRequest;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -37,7 +30,6 @@ class RegisterRequest extends FormRequest
             ],
             'birth_date'   => 'required|date',
             'password'     => 'required|string',
-            'country_code' => 'required|string',
         ];
     }
 }

@@ -88,14 +88,9 @@ class User extends Authenticatable
     }
 
 
-    public function updateLocation(string $lat, string $lng, string $map_desc): void
+    public function updateLocation($data): void
     {
-        $this->update([
-            'lat' => $lat,
-            'lng' => $lng,
-            'map_desc' => $map_desc,
-            'completed_info' => true,
-        ]);
+        $this->update($data + ['completed_info' => true]);
     }
 
     public function markAsVerified()
@@ -118,8 +113,7 @@ class User extends Authenticatable
     }
 
     public function login(){
-        $token = $this->createToken('user-token')->plainTextToken;
-        return $token;
+        return $this->createToken('user-token')->plainTextToken;
     }
 
     protected static function boot()

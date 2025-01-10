@@ -2,18 +2,11 @@
 
 namespace App\Http\Requests\user\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Http\Requests\BaseRequest;
 
-class ResendCodeRequest extends FormRequest
+class ResendCodeRequest extends BaseRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,7 +15,10 @@ class ResendCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => ['required','numeric'],
+            'phone' => [
+                'required',
+                'numeric',
+                Rule::exists('users', 'phone')->whereNull('deleted_at')],
         ];
     }
 }
