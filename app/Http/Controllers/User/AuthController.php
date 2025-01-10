@@ -36,20 +36,19 @@ class AuthController extends Controller
         $user = User::where('phone', $request->phone)->first();
 
         if (!$user) {
-            return $this->failureResponse('User not found');
+            return $this->failureResponse('المستخدم غير موجود');
         }
 
         if ($user->code !== $request->code) {
-            return $this->failureResponse('Invalid code');
+            return $this->failureResponse('كود غير صحيح');
         }
 
         if ($user->isCodeExpired()) {
-            return $this->failureResponse('The code is expired');
+            return $this->failureResponse('كود منتهي الصلاحية');
         }
 
         $user->markAsVerified();
         $token = $user->login();
-
         return $this->successWithDataResponse(UserResource::make($user)->setToken($token));
     }
 
@@ -61,19 +60,16 @@ class AuthController extends Controller
         $user = User::where('phone', $request->phone)->first();
 
         if (!$user) {
-            return $this->failureResponse('User not found');
+            return $this->failureResponse('المستخدم غير موجود');
         }
 
         if (!$user->isCodeExpired()) {
-            return $this->failureResponse('Code is still valid');
+            return $this->failureResponse('لم تمر دقيقة بعد');
         }
 
         $user->sendVerificationCode();
-
         return $this->successWithDataResponse('');
     }
-
-
 
     //Login User
     public function login(LoginUserRequest $request)
@@ -81,18 +77,18 @@ class AuthController extends Controller
         $request->validated();
         $user = User::where('phone', $request->phone)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->input('password'), $user->password)) {
             return $this->failureResponse('بيانات الدخول غير صحيحة');
         }
 
         $token = $user->login();
 
         if (!$user->is_active) {
-            return $this->inactiveUserResponse( UserResource::make($user)->setToken($token));
+            return $this->inactiveUserResponse(UserResource::make($user)->setToken($token));
         }
 
         if (!$user->completed_info) {
-            return $this->incompletedUserResponse( UserResource::make($user)->setToken($token));
+            return $this->incompletedUserResponse(UserResource::make($user)->setToken($token));
         }
 
         return $this->successWithDataResponse(UserResource::make($user)->setToken($token));
@@ -102,7 +98,8 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         $user->updateLocation($request->lat, $request->lng, $request->map_desc);
-        return $this->successWithDataResponse(new UserResource($user));
+        $token = $user->login();
+        return $this->successWithDataResponse(UserResource::make($user)->setToken($token));
     }
 
     //Logout User
