@@ -88,14 +88,9 @@ class User extends Authenticatable
     }
 
 
-    public function updateLocation(string $lat, string $lng, string $map_desc): void
+    public function updateLocation($data): void
     {
-        $this->update([
-            'lat' => $lat,
-            'lng' => $lng,
-            'map_desc' => $map_desc,
-            'completed_info' => true,
-        ]);
+        $this->update($data + ['completed_info' => true]);
     }
 
     public function markAsVerified()
@@ -107,6 +102,15 @@ class User extends Authenticatable
         ]);
     }
 
+    public function updatePassword($password){
+        $this->update([
+            'password' => $password,
+            'code' => null,
+            'code_expire' => null,
+            'is_verified' => false,
+        ]);
+    }
+
     public function sendVerificationCode()
     {
         $this->update([
@@ -114,12 +118,11 @@ class User extends Authenticatable
             'code_expire' => now()->addMinutes(1),
         ]);
 
-        (new SendVerificationCodeService())->sendCodeToUser($this);
+        // (new SendVerificationCodeService())->sendCodeToUser($this);
     }
 
     public function login(){
-        $token = $this->createToken('user-token')->plainTextToken;
-        return $token;
+        return $this->createToken('user-token')->plainTextToken;
     }
 
     protected static function boot()

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\user\Auth\ResendCodeRequest;
-use App\Http\Requests\user\Auth\LoginUserRequest;
-use App\Http\Requests\user\Auth\RegisterRequest;
-use App\Http\Requests\user\Auth\VerifyUserRequest;
-use App\Http\Requests\user\Auth\LocationRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\user\Auth\LocationRequest;
+use App\Http\Requests\Api\User\Auth\RegisterRequest;
+use App\Http\Requests\Api\User\Auth\LoginUserRequest;
+use App\Http\Requests\Api\User\Auth\ResendCodeRequest;
+use App\Http\Requests\Api\User\Auth\VerifyUserRequest;
 
 class AuthController extends Controller
 {
@@ -31,8 +31,6 @@ class AuthController extends Controller
     // Verify email
     public function verifyEmail(VerifyUserRequest $request)
     {
-        $request->validated();
-
         $user = User::where('phone', $request->phone)->first();
 
         if (!$user) {
@@ -48,15 +46,13 @@ class AuthController extends Controller
         }
 
         $user->markAsVerified();
-        $token = $user->login();
-        return $this->successWithDataResponse(UserResource::make($user)->setToken($token));
+        return $this->successWithDataResponse(UserResource::make($user)->setToken($user->login()));
     }
 
 
     // Resend verification code
     public function resendCode(ResendCodeRequest $request)
     {
-        $request->validated();
         $user = User::where('phone', $request->phone)->first();
 
         if (!$user) {
@@ -68,24 +64,30 @@ class AuthController extends Controller
         }
 
         $user->sendVerificationCode();
-        return $this->successWithDataResponse('');
+        return $this->successResponse();
     }
 
+
+    public function setLocation(LocationRequest $request)
+    {
+        $user = auth()->user();
+        $user->updateLocation($request->validated());
+        return $this->successWithDataResponse(UserResource::make($user)->setToken(ltrim($request->header('authorization'), 'Bearer ')));
+    }
     //Login User
     public function login(LoginUserRequest $request)
     {
-        $request->validated();
         $user = User::where('phone', $request->phone)->first();
 
         if (!$user || !Hash::check($request->input('password'), $user->password)) {
             return $this->failureResponse('بيانات الدخول غير صحيحة');
         }
 
-        $token = $user->login();
-
         if (!$user->is_active) {
-            return $this->inactiveUserResponse(UserResource::make($user)->setToken($token));
+            return $this->inactiveUserResponse(new UserResource($user));
         }
+
+        $token = $user->login();
 
         if (!$user->completed_info) {
             return $this->incompletedUserResponse(UserResource::make($user)->setToken($token));
@@ -93,19 +95,10 @@ class AuthController extends Controller
 
         return $this->successWithDataResponse(UserResource::make($user)->setToken($token));
     }
-
-    public function setLocation(LocationRequest $request)
-    {
-        $user = auth()->user();
-        $user->updateLocation($request->lat, $request->lng, $request->map_desc);
-        $token = $user->login();
-        return $this->successWithDataResponse(UserResource::make($user)->setToken($token));
-    }
-
     //Logout User
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return $this->successWithMessageResponse('تم تسجيل الخروج بنجاح');
+        return $this->successResponse('تم تسجيل الخروج بنجاح');
     }
 }
