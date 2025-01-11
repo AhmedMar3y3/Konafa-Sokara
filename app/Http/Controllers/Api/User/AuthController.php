@@ -8,7 +8,7 @@ use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\user\Auth\LocationRequest;
+use App\Http\Requests\Api\User\LocationRequest;
 use App\Http\Requests\Api\User\Auth\RegisterRequest;
 use App\Http\Requests\Api\User\Auth\LoginUserRequest;
 use App\Http\Requests\Api\User\Auth\ResendCodeRequest;
