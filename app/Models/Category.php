@@ -42,10 +42,4 @@ class Category extends Model
            });
        }
 
-       public function uploadImage($image)
-       {
-           if ($image) {
-               $this->image = ImageUploadHelper::uploadImage($image, 'categories');
-           }
-       }
 }

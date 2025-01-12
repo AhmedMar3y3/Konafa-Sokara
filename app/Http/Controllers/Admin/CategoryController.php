@@ -19,9 +19,7 @@ class CategoryController extends Controller
     // Store a new category
     public function store(StoreCategoryRequest $request)
     {
-        $category = new Category($request->validated());
-        $category->uploadImage($request->file('image'));
-        $category->save();
+        Category::create($request->validated());
         return redirect()->back()->with('success', 'تم إنشاء الفئة بنجاح.');
     }
 
@@ -36,10 +34,7 @@ class CategoryController extends Controller
     // Store a new subcategory
     public function storeSubCategory(StoreCategoryRequest $request, $parentId)
     {
-        $category = new Category($request->validated());
-        $category->parent_id = $parentId;
-        $category->uploadImage($request->file('image'));
-        $category->save();
+        Category::create($request->validated() + ['parent_id'=>$parentId]);
         return redirect()->back()->with('success', 'تم إنشاء الفئة الفرعية بنجاح.');
     }
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 
 //public routes
 Route::get('/', [AuthController::class, 'loadLoginPage'])->name('loginPage');
@@ -14,7 +15,7 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout'); 
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('admin.dashboard');
 
-    // category routes
+    // category routes //
     Route::get('/category', [CategoryController::class, 'index'])->name('admin.categories.index');
     Route::post('/category', [CategoryController::class, 'store'])->name('admin.categories.store');
     Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
@@ -22,4 +23,13 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::put('/category/{id}', [CategoryController::class, 'update'])->name('admin.categories.update');
     Route::post('categories/{parentId}/subcategories', [CategoryController::class, 'storeSubCategory'])->name('admin.categories.storeSubCategory');
 
+    // product routes //
+    Route::get('/products', [ProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/show-product/{id}', [ProductController::class, 'show'])->name('admin.products.show');
+    Route::get('/create-product', [ProductController::class, 'create'])->name('admin.products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('admin.products.store');
+    Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('admin.products.edit');
+    Route::put('/update-product/{id}', [ProductController::class, 'update'])->name('admin.products.update');
+    Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+    
 });

@@ -2,14 +2,19 @@
 
 namespace App\Traits;
 
+use App\Helpers\ImageUploadHelper;
+
 trait HasImage{
-    public function getImageAttribute($value)
-    {
-        return $value ? asset($value) : null;
-    }
 
     public function setImageAttribute($value)
-    {
-        $this->attributes['image'] = $value;
+{
+    if ($value) {
+        $this->attributes['image'] = ImageUploadHelper::uploadImage($value, 'categories');
     }
+}
+
+public function getImageAttribute($value)
+{
+    return $value ? asset('public/images/' . $value) : null;
+}
 }
