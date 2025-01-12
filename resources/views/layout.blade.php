@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
     @include('partials.head')
     <body>
         <div class="container-scroller">
-            @include('partials.sidebar')
+           
             <div class="container-fluid page-body-wrapper">
                 @include('partials.navbar')
                 <div class="main-panel">
@@ -15,6 +15,7 @@
                     @include('partials.footer')
                 </div>
             </div>
+            @include('partials.sidebar')
         </div>
         @include('partials.scripts')
     </body>
