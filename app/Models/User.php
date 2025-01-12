@@ -29,6 +29,7 @@ class User extends Authenticatable
         'phone',
         'country_code',
         'email',
+        'image',
         'birth_date',
         'password',
         'is_active',
@@ -74,6 +75,11 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 
 
@@ -133,6 +139,23 @@ class User extends Authenticatable
             $model->owned_referral_code = self::generateReferralCode();
         });
     }
+
+    public function hasNoOrdersOrCompletedOrders()
+    {
+        return !$this->orders()->exists() || $this->orders()->where('status', 3)->exists();
+    }
+
+    public function changePassword(string $newPassword): void
+{
+    $this->password = $newPassword;
+    $this->save();
+}
+
+public function verifyPassword(string $password): bool
+{
+    return Hash::check($password, $this->password);
+}
+
 
 
     

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('country_code')->default('966');
             $table->string('email');
+            $table->string('image')->nullable();
             $table->string('password');
             $table->date('birth_date');
             $table->boolean('is_active')->default(false);

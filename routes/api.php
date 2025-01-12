@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthController;
+use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\ResetPasswordController;
 
 Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@register');
@@ -24,5 +25,13 @@ Route::post('/reset-password'               ,[ResetPasswordController::class, 'r
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('set-location', [AuthController::class, 'setLocation']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+// profile routes //
+    Route::get('/get-profile', [ProfileController::class, 'getProfile']);
+    Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
+    // Route::get('/my-orders', [ProfileController::class, 'myOrders']);
+    Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
+    Route::post('/change-password', [ProfileController::class, 'changePassword']);
+// profile routes //
 
 });
