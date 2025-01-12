@@ -12,4 +12,6 @@
     <link rel="stylesheet" href="{{ asset("assets/vendors/owl-carousel-2/owl.carousel.min.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/vendors/owl-carousel-2/owl.theme.default.min.css") }}">
     <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}">
+
+    
 </head>
