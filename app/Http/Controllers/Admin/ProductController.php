@@ -20,7 +20,6 @@ class ProductController extends Controller
                 return $query->where('name', 'like', '%' . $search . '%');
             })
             ->paginate(15);
-
         return view('products.index', compact('products', 'search'));
     }
 
@@ -34,47 +33,42 @@ class ProductController extends Controller
     // Show the form to create a new product
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('parent_id', '!=', null)->get();
         return view('products.create', compact('categories'));
     }
 
     // Store a new product
     public function store(StoreProductRequest $request)
-    {
-        $product = new Product($request->validated());
-
-        if ($request->hasFile('image')) {
-            $product->uploadImage($request->file('image'));
-        }
-
-        $product->save();
-        return redirect()->route('admin.products.index')->with('success', 'تم إنشاء المنتج بنجاح.');
-    }
+{
+    $validatedData = Product::assignCategory($request->validated());
+    Product::create($validatedData);
+    return redirect()->route('admin.products.index')->with('success', 'تم إنشاء المنتج بنجاح.');
+}
 
     // Show the form to edit a product
     public function edit(Product $product,$id)
     {
         $product = Product::find($id);
-        $categories = Category::all();
+        $categories = Category::where('parent_id', '!=', null)->get();
         return view('products.edit', compact('product', 'categories'));
     }
 
     // Update a product
+
     public function update(UpdateProductRequest $request,$id)
     {
-
         $product = Product::find($id);
-        $product->uploadImage($request->file('image'));
-        $product->save();
+        $product->update($request->validated());
         return redirect()->route('admin.products.index')->with('success', 'تم تحديث المنتج بنجاح.');
     }
 
     // Delete a product
-
-    //TODO check if the product has orders
     public function destroy($id)
     {
         $product = Product::find($id);
+        // if ($product->hasOrders()) {
+        //     return redirect()->route('admin.products.index')->with('error', 'لا يمكن حذف المنتج لأنه يحتوي على طلبات قيد العمل.');
+        // }
         $product->delete();
         return redirect()->route('admin.products.index')->with('success', 'تم حذف المنتج بنجاح.');
     }

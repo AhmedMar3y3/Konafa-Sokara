@@ -15,6 +15,6 @@ class ImageUploadHelper
         $fileName = time() . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
         $file->move($uploadPath, $fileName);
 
-        return env('APP_URL') . "/public/images/{$directory}/{$fileName}";
+        return "/public/images/{$directory}/{$fileName}";
     }
 }

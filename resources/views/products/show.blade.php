@@ -12,13 +12,21 @@
             <p class="card-text"><strong>الوصفة:</strong> {{ $product->recipe }}</p>
             <p class="card-text"><strong>الكمية:</strong> {{ $product->quantity }}</p>
             <p class="card-text"><strong>السعر:</strong> {{ $product->price }}</p>
+            @if($product->discount_price)
             <p class="card-text"><strong>سعر الخصم:</strong> {{ $product->discount_price }}</p>
-            <p class="card-text"><strong>النقاط:</strong> {{ $product->points }}</p>
-            <p class="card-text"><strong>الفئة:</strong> {{ $product->category->name }}</p>
-            <p class="card-text"><strong>الفئة الفرعية:</strong> {{ $product->category->name }}</p>
-            @if ($product->image)
-                <img src="{{ $product->image }}" alt="Product Image" width="200" class="mt-2">
             @endif
+            @if($product->points)
+                <p class="card-text"><strong>النقاط:</strong> {{ $product->points }}</p>
+            @endif
+            <p class="card-text"><strong>الفئة :</strong> {{ $product->category->name }}</p>
+            <div class="mb-3">
+                @if($product->image)
+                    <p><strong>الصورة</strong></p>
+                    <img src="{{ asset('/images/product/' . basename($product->image)) }}" alt="Image" style="width: 200px;">
+                @else
+                    <p>No image available.</p>
+                @endif
+            </div>
         </div>
     </div>
 

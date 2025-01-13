@@ -23,6 +23,7 @@
             <tr>
                 <th>الإجراءات</th>
                 <th>الاسم</th>
+                <th>الصورة</th>
                 <th>#</th>
             </tr>
         </thead>
@@ -40,6 +41,8 @@
                     </button>
                 </td>
                 <td>{{ $subcategory->name }}</td>
+                <td>  <img src="{{ asset('/images/category/' . basename($subcategory->image)) }}" alt="Image" style="width: auto;"></td>
+
                 <td>{{ $subcategory->id }}</td>
             </tr>
 
@@ -79,7 +82,7 @@
             </div>
             @empty
             <tr>
-                <td colspan="3" class="text-center">لا توجد فئات فرعية متاحة.</td>
+                <td colspan="12" class="text-center">لا توجد فئات فرعية متاحة.</td>
             </tr>
             @endforelse
         </tbody>
