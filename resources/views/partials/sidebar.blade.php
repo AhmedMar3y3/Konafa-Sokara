@@ -50,5 +50,14 @@
                 </span>
             </a>
         </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.additions.index') }}">
+              
+                <span class="menu-title me-2">الإضافات</span>
+                <span class="menu-icon">
+                    <i class="fa fa-plus-circle"></i>
+                </span>
+            </a>
+        </li>
     </ul>
 </nav>

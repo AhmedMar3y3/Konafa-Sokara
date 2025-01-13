@@ -50,8 +50,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, $id)
     {
         $category = Category::find($id);
-        $category->uploadImage($request->file('image'));
-        $category->save();
+        $category->update($request->validated());
         return redirect()->back()->with('success', 'تم تحديث الفئة بنجاح.');
     }
 

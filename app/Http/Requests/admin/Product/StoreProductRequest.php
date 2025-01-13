@@ -76,15 +76,8 @@ class StoreProductRequest extends BaseRequest
             ],
             'points' => 
             [
-                'required',
+                'required_if:can_apply_prize,1',
                  'numeric',
-            ],
-            'category_id' => 
-            [
-                'required',
-                 'numeric',
-                 Rule::exists('categories', 'id'),
-
             ],
             'sub_category_id' => 
             [

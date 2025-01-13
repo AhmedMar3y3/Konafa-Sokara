@@ -64,9 +64,22 @@
             @endforelse
         </tbody>
     </table>
+        <!-- Pagination Buttons -->
+        <div class="d-flex justify-content-between mt-4">
+            <!-- Previous Page Button -->
+            @if($products->onFirstPage())
+            <span class="btn btn-secondary btn-rounded disabled">السابق</span>
+            @else
+            <a href="{{ $products->previousPageUrl() }}" class="btn btn-primary btn-rounded">السابق</a>
+            @endif
 
-    <!-- Pagination Links -->
-    {{ $products->links() }}
+            <!-- Next Page Button -->
+            @if($products->hasMorePages())
+            <a href="{{ $products->nextPageUrl() }}" class="btn btn-primary btn-rounded">التالي</a>
+            @else
+            <span class="btn btn-secondary btn-rounded disabled">التالي</span>
+            @endif
+        </div>
 </div>
 
 @endsection

@@ -32,11 +32,22 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    // public function hasOrders()
+    // {
+    //     return $this->orders()->where('status','!=', 3)->exists();
+    // }
 
-    public function uploadImage($image)
+    public function orders()
     {
-        if ($image) {
-            $this->image = ImageUploadHelper::uploadImage($image, 'categories');
-        }
+        return $this->hasMany(Order::class);
     }
+
+    public static function assignCategory(array $validated)
+    {
+        $subCategory = Category::find($validated['sub_category_id']);
+        $validated['category_id'] = $subCategory->parent_id;
+        return $validated;
+    }
+
+
 }

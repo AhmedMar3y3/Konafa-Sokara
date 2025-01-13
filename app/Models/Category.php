@@ -42,4 +42,8 @@ class Category extends Model
            });
        }
 
+       public function additions()
+       {
+           return $this->hasMany(Addition::class);
+       }
 }

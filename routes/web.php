@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\AdditionController;
 
 //public routes
 Route::get('/', [AuthController::class, 'loadLoginPage'])->name('loginPage');
@@ -31,5 +32,11 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::get('/edit-product/{id}', [ProductController::class, 'edit'])->name('admin.products.edit');
     Route::put('/update-product/{id}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::delete('/delete-product/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+
+    // addition routes //
+    Route::get('/additions', [AdditionController::class, 'index'])->name('admin.additions.index');
+    Route::post('/additions', [AdditionController::class, 'store'])->name('admin.additions.store');
+    Route::put('/additions/{id}', [AdditionController::class, 'update'])->name('admin.additions.update');
+    Route::delete('/additions/{id}', [AdditionController::class, 'destroy'])->name('admin.additions.destroy');
     
 });
