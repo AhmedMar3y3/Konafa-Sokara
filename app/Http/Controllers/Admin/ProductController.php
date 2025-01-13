@@ -24,7 +24,7 @@ class ProductController extends Controller
     }
 
     // Show a specific product details
-    public function show(Product $product,$id)
+    public function show(Product $product, $id)
     {
         $product = Product::with('category')->find($id);
         return view('products.show', compact('product'));
@@ -39,14 +39,14 @@ class ProductController extends Controller
 
     // Store a new product
     public function store(StoreProductRequest $request)
-{
-    $validatedData = Product::assignCategory($request->validated());
-    Product::create($validatedData);
-    return redirect()->route('admin.products.index')->with('success', 'تم إنشاء المنتج بنجاح.');
-}
+    {
+        $validatedData = Product::assignCategory($request->validated());
+        Product::create($validatedData);
+        return redirect()->route('admin.products.index')->with('success', 'تم إنشاء المنتج بنجاح.');
+    }
 
     // Show the form to edit a product
-    public function edit(Product $product,$id)
+    public function edit(Product $product, $id)
     {
         $product = Product::find($id);
         $categories = Category::where('parent_id', '!=', null)->get();
@@ -55,7 +55,7 @@ class ProductController extends Controller
 
     // Update a product
 
-    public function update(UpdateProductRequest $request,$id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $product = Product::find($id);
         $product->update($request->validated());
