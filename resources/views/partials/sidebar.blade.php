@@ -59,12 +59,20 @@
                 </span>
             </a>
         </li>
-        <li class="nav-item menu-items">
-            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.faqs.index') }}">
-              
+       <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.faqs.index') }}"> 
                 <span class="menu-title me-2">الاسئلة الشائعة</span>
                 <span class="menu-icon">
                     <i class="fa fa-question-circle"></i>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.banners.index') }}">
+              
+                <span class="menu-title me-2">البانرات</span>
+                <span class="menu-icon">
+                    <i class="fa fa-image"></i>
                 </span>
             </a>
         </li>
