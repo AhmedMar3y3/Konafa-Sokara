@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AdditionController;
 use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\SettingController;
 
 //public routes
 Route::get('/', [AuthController::class, 'loadLoginPage'])->name('loginPage');
@@ -54,4 +55,8 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::post('/faq', [FAQController::class, 'store'])->name('admin.faqs.store');
     Route::put('/faq/{id}', [FAQController::class, 'update'])->name('admin.faqs.update');
     Route::delete('/faq/{id}', [FAQController::class, 'destroy'])->name('admin.faqs.destroy');
+
+    // setting routes //
+    Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings.index');
+    Route::put('/settings', [SettingController::class, 'update'])->name('admin.settings.update');
 });

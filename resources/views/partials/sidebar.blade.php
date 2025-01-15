@@ -76,5 +76,13 @@
                 </span>
             </a>
         </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.settings.index') }}">
+                <span class="menu-title">الإعدادات</span>
+                <span class="menu-icon">
+                    <i class="fa fa-cogs"></i>
+                </span>
+            </a>
+        </li>
     </ul>
 </nav>
