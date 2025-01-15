@@ -7,6 +7,7 @@ use App\Http\Resources\Home\CategoryResource;
 use App\Http\Resources\Home\DiscountedProductResource;
 use App\Http\Resources\Home\ProductResource;
 use App\Http\Resources\Home\ProductDetailsResource;
+use App\Models\Banner;
 use App\Traits\HttpResponses;
 use App\Models\Category;
 use App\Models\Product;
@@ -36,6 +37,10 @@ class HomeController extends Controller
         return $this->successWithDataResponse(new ProductDetailsResource($product));
     }
 
+    public function banners(){
+        $banners = Banner::get(['id', 'image']);
+        return $this->successWithDataResponse($banners);
+    }
     public function newestProducts()
     {
         $products = Product::orderBy('created_at', 'desc')->take(1)->get(['id', 'name', 'price', 'image']);
