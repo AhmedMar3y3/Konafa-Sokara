@@ -61,7 +61,7 @@ class Product extends Model
             ->when($price === 'low_to_high', function ($query) {
                 $query->orderBy('price', 'asc');
             })
-            ->get();
+            ->get(['id', 'name', 'price', 'image']);
     }
 
     public function favoritedBy()
@@ -72,6 +72,11 @@ class Product extends Model
     public function isFavorited()
     {
         return $this->favoritedBy()->where('user_id', Auth::id())->exists();
+    }
+
+    public function additions()
+    {
+        return $this->hasManyThrough(Addition::class, Category::class, 'id', 'category_id', 'category_id', 'id');   
     }
 
 }
