@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\ResetPasswordController;
+use App\Http\Controllers\Api\User\HomeController;
+use App\Http\Controllers\Api\User\FavouriteController;
 
 Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@register');
 
@@ -29,10 +31,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
 // profile routes //
     Route::get('/get-profile', [ProfileController::class, 'getProfile']);
     Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
-    // Route::get('/my-orders', [ProfileController::class, 'myOrders']);
+    Route::get('/my-orders', [ProfileController::class, 'myOrders']);
     Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
     Route::post('/change-password', [ProfileController::class, 'changePassword']);
     Route::get('/faqs', [ProfileController::class, 'faqs']);
 // profile routes //
+
+// home routes //
+    Route::get('/categories', [HomeController::class, 'indexCategory']);
+    Route::get('/categories/{categoryId}/subcategory', [HomeController::class, 'indexProducts']);
+    Route::get('/categories/{categoryId}/subcategory/{subcategoryId}', [HomeController::class, 'indexProducts']);
+    Route::get('/product/{id}', [HomeController::class, 'showProduct']);
+    Route::get('/newest-products', [HomeController::class, 'newestProducts']);
+    Route::get('/offers', [HomeController::class, 'offers']);
+    Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
+
+// favourite routes //
+    Route::get('/favourites', [FavouriteController::class, 'index']);
+    Route::post('/toggle-favourite/{id}', [FavouriteController::class, 'toggleFavorite']);
 
 });

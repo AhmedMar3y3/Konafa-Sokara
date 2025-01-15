@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes, HttpResponses;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HttpResponses;
 
     /**
      * The attributes that are mass assignable.
@@ -108,7 +108,8 @@ class User extends Authenticatable
         ]);
     }
 
-    public function updatePassword($password){
+    public function updatePassword($password)
+    {
         $this->update([
             'password' => $password,
             'code' => null,
@@ -127,7 +128,8 @@ class User extends Authenticatable
         // (new SendVerificationCodeService())->sendCodeToUser($this);
     }
 
-    public function login(){
+    public function login()
+    {
         return $this->createToken('user-token')->plainTextToken;
     }
 
@@ -146,17 +148,19 @@ class User extends Authenticatable
     }
 
     public function changePassword(string $newPassword): void
-{
-    $this->password = $newPassword;
-    $this->save();
-}
+    {
+        $this->password = $newPassword;
+        $this->save();
+    }
 
-public function verifyPassword(string $password): bool
-{
-    return Hash::check($password, $this->password);
-}
+    public function verifyPassword(string $password): bool
+    {
+        return Hash::check($password, $this->password);
+    }
 
+    public function favourites()
+    {
+        return $this->belongsToMany(Product::class, 'favourites', 'user_id', 'product_id');
+    }
 
-
-    
 }

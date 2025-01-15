@@ -5,7 +5,8 @@ namespace App\Traits;
 use App\Helpers\ImageUploadHelper;
 use ReflectionClass;
 
-trait HasImage{
+trait HasImage
+{
 
     public function setImageAttribute($value)
     {
@@ -15,8 +16,8 @@ trait HasImage{
         }
     }
 
-public function getImageAttribute($value)
-{
-    return $value ? asset('public/images/' . $value) : null;
-}
+    public function getImageAttribute($value)
+    {
+        return $value ? asset($value) : null;
+    }
 }

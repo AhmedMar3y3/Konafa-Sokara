@@ -6,7 +6,7 @@ use App\Traits\HasImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Helpers\ImageUploadHelper;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -49,5 +49,29 @@ class Product extends Model
         return $validated;
     }
 
+    public static function getProductsByCategory($categoryId, $subcategoryId = null, $price = null)
+    {
+        return self::where('category_id', $categoryId)
+            ->when($subcategoryId, function ($query, $subcategoryId) {
+                $query->where('sub_category_id', $subcategoryId);
+            })
+            ->when($price === 'high_to_low', function ($query) {
+                $query->orderBy('price', 'desc');
+            })
+            ->when($price === 'low_to_high', function ($query) {
+                $query->orderBy('price', 'asc');
+            })
+            ->get();
+    }
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favourites', 'product_id', 'user_id');
+    }
+
+    public function isFavorited()
+    {
+        return $this->favoritedBy()->where('user_id', Auth::id())->exists();
+    }
 
 }
