@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\AdditionController;
+use App\Http\Controllers\Admin\BannerController;
 
 //public routes
 Route::get('/', [AuthController::class, 'loadLoginPage'])->name('loginPage');
@@ -38,5 +39,12 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::post('/additions', [AdditionController::class, 'store'])->name('admin.additions.store');
     Route::put('/additions/{id}', [AdditionController::class, 'update'])->name('admin.additions.update');
     Route::delete('/additions/{id}', [AdditionController::class, 'destroy'])->name('admin.additions.destroy');
+
+    // banner routes //
+    Route::get('/banners', [BannerController::class, 'index'])->name('admin.banners.index');
+    Route::get('/banners/{id}', [BannerController::class, 'show'])->name('admin.banners.show');
+    Route::post('/banners', [BannerController::class, 'store'])->name('admin.banners.store');
+    Route::put('/banners/{id}', [BannerController::class, 'update'])->name('admin.banners.update');
+    Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('admin.banners.destroy');
     
 });

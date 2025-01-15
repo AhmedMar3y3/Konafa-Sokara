@@ -27,6 +27,7 @@ Route::get('/categories/{categoryId}/subcategory/{subcategoryId?}', [HomeControl
 Route::get('/newest-products', [HomeController::class, 'newestProducts']);
 Route::get('/offers', [HomeController::class, 'offers']);
 Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
+Route::get('/banners', [HomeController::class, 'banners']);
 
 //protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
