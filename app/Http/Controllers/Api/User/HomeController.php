@@ -15,32 +15,30 @@ class HomeController extends Controller
 {
     use HttpResponses;
 
-    public function indexCategory()
+    public function categories()
     {
         $categories = Category::where('parent_id', null)->with('children')->get();
         return $this->successWithDataResponse(CategoryResource::collection($categories));
     }
 
-    public function indexProducts($categoryId, $subcategoryId = null)
+    public function products($categoryId, $subcategoryId = null)
     {
-        $price = request()->query('price');
-        $products = Product::getProductsByCategory($categoryId, $subcategoryId, $price);
+        $products = Product::getProductsByCategory($categoryId, $subcategoryId, request()->query('price'));
         return $this->successWithDataResponse(ProductResource::collection($products));
     }
 
     public function showProduct($id)
     {
-        $product = Product::with('category.additions')->find($id);
+        $product = Product::with('additions')->find($id);
         if (!$product) {
             return $this->failureResponse('لم يتم العثور على المنتج');
         }
-        $isFavorited = $product->isFavorited();
-        return $this->successWithDataResponse(new ProductDetailsResource($product, $isFavorited));
+        return $this->successWithDataResponse(new ProductDetailsResource($product));
     }
 
     public function newestProducts()
     {
-        $products = Product::orderBy('created_at', 'desc')->take(1)->get();
+        $products = Product::orderBy('created_at', 'desc')->take(1)->get(['id', 'name', 'price', 'image']);
         return $this->successWithDataResponse(ProductResource::collection($products));
     }
 

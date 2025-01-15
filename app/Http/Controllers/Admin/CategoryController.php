@@ -49,8 +49,7 @@ class CategoryController extends Controller
     // Update a category
     public function update(UpdateCategoryRequest $request, $id)
     {
-        $category = Category::find($id);
-        $category->update($request->validated());
+       Category::find($id)->update($request->validated());
         return redirect()->back()->with('success', 'تم تحديث الفئة بنجاح.');
     }
 
