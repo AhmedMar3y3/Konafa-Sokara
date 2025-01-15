@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // Route::get('/my-orders', [ProfileController::class, 'myOrders']);
     Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
     Route::post('/change-password', [ProfileController::class, 'changePassword']);
+    Route::get('/faqs', [ProfileController::class, 'faqs']);
 // profile routes //
 
 });
