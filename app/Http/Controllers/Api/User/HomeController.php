@@ -24,7 +24,7 @@ class HomeController extends Controller
 
     public function products($categoryId, $subcategoryId = null)
     {
-        $products = Product::getProductsByCategory($categoryId, $subcategoryId, request()->query('price'));
+        $products = Product::getProductsByCategory($categoryId, $subcategoryId, request()->query('price'),request()->query('search'));
         return $this->successWithDataResponse(ProductResource::collection($products));
     }
 
