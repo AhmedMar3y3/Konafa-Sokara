@@ -8,7 +8,9 @@ use App\Http\Requests\Api\User\Profile\ChangePasswordRequest;
 use App\Helpers\ImageUploadHelper;
 use App\Http\Requests\Api\User\Profile\DeleteAccountRequest;
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\FaqResource;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Faq;
 
 
 use App\Traits\HttpResponses;
@@ -67,5 +69,11 @@ class ProfileController extends Controller
         $user->changePassword($request->password);
 
         return $this->successResponse('تم تغيير كلمة المرور بنجاح');
+    }
+
+    public function faqs()
+    {
+        $faqs = Faq::get(['id', 'question', 'answer']);
+        return $this->successWithDataResponse(FaqResource::collection($faqs));
     }
 }

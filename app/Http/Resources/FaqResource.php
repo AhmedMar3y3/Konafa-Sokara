@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Home;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class FaqResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,8 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'image' => $this->image,
-            'children' => SubcategoryResource::collection($this->children),
+            'question' => $this->question,
+            'answer' => $this->answer,
         ];
     }
 }

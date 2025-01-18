@@ -49,7 +49,7 @@ class Product extends Model
         return $validated;
     }
 
-    public static function getProductsByCategory($categoryId, $subcategoryId = null, $price = null)
+    public static function getProductsByCategory($categoryId, $subcategoryId = null, $price = null, $search = null)
     {
         return self::where('category_id', $categoryId)
             ->when($subcategoryId, function ($query, $subcategoryId) {
@@ -61,8 +61,10 @@ class Product extends Model
             ->when($price === 'low_to_high', function ($query) {
                 $query->orderBy('price', 'asc');
             })
-            ->get();
-    }
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->get(['id', 'name', 'price', 'image']);    }
 
     public function favoritedBy()
     {
@@ -76,7 +78,7 @@ class Product extends Model
 
     public function additions()
     {
-        return $this->hasManyThrough(Addition::class, Category::class, 'id', 'category_id','sub_category_id','id');
+        return $this->hasManyThrough(Addition::class, Category::class, 'id', 'category_id', 'category_id', 'id');   
     }
 
     public function getPriceAfterDiscountAttribute(){

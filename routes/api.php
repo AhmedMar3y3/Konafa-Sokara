@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthController;
 use App\Http\Controllers\Api\User\CartController;
@@ -22,7 +21,14 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/reset-password-send-code'     ,[ResetPasswordController::class, 'sendCode']);
 Route::post('/reset-password-check-code'    ,[ResetPasswordController::class, 'checkCode']);
 Route::post('/reset-password'               ,[ResetPasswordController::class, 'resetPassword']);
-// reset password //
+
+// home routes //
+Route::get('/categories', [HomeController::class, 'categories']);
+Route::get('/categories/{categoryId}/subcategory/{subcategoryId?}', [HomeController::class, 'products']);
+Route::get('/newest-products', [HomeController::class, 'newestProducts']);
+Route::get('/offers', [HomeController::class, 'offers']);
+Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
+Route::get('/banners', [HomeController::class, 'banners']);
 
 //protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
@@ -35,14 +41,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/my-orders', [ProfileController::class, 'myOrders']);
     Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
     Route::post('/change-password', [ProfileController::class, 'changePassword']);
+    Route::get('/faqs', [ProfileController::class, 'faqs']);
+// profile routes //
+
 
 // home routes //
     Route::get('/categories', [HomeController::class, 'indexCategory']);
     Route::get('/categories/{categoryId}/subcategory/{subcategoryId}', [HomeController::class, 'indexProducts']);
+
     Route::get('/product/{id}', [HomeController::class, 'showProduct']);
-    Route::get('/newest-products', [HomeController::class, 'newestProducts']);
-    Route::get('/offers', [HomeController::class, 'offers']);
-    Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
 
 // favourite routes //
     Route::get('/favourites', [FavouriteController::class, 'index']);

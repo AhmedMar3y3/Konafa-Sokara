@@ -57,8 +57,7 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, $id)
     {
-        $product = Product::find($id);
-        $product->update($request->validated());
+        Product::find($id)->update($request->validated());
         return redirect()->route('admin.products.index')->with('success', 'تم تحديث المنتج بنجاح.');
     }
 
