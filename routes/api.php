@@ -46,9 +46,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
 // home routes //
-    Route::get('/categories', [HomeController::class, 'categories']);
-    Route::get('/categories/{categoryId}/subcategory/{subcategoryId}', [HomeController::class, 'indexProducts']);
-
     Route::get('/product/{id}', [HomeController::class, 'showProduct']);
 
 // favourite routes //
