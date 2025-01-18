@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\User\AuthController;
-use App\Http\Controllers\Api\User\ProfileController;
-use App\Http\Controllers\Api\User\ResetPasswordController;
+use App\Http\Controllers\Api\User\CartController;
 use App\Http\Controllers\Api\User\HomeController;
+use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\FavouriteController;
+use App\Http\Controllers\Api\User\ResetPasswordController;
 
 Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@register');
 
@@ -43,10 +44,22 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/faqs', [ProfileController::class, 'faqs']);
 // profile routes //
 
+
+// home routes //
+    Route::get('/categories', [HomeController::class, 'indexCategory']);
+    Route::get('/categories/{categoryId}/subcategory/{subcategoryId}', [HomeController::class, 'indexProducts']);
+
     Route::get('/product/{id}', [HomeController::class, 'showProduct']);
 
 // favourite routes //
     Route::get('/favourites', [FavouriteController::class, 'index']);
     Route::post('/toggle-favourite/{id}', [FavouriteController::class, 'toggleFavorite']);
+
+    // cart
+    Route::post('/add-to-cart'              ,[CartController::class , 'addToCart']);
+    Route::get('/cart-summary'              ,[CartController::class , 'cartSummary']);
+    Route::post('/update-cart'              ,[CartController::class , 'updateCart']);
+    Route::post('delete-cart'               ,[CartController::class , 'deleteCart']);
+    // cart
 
 });

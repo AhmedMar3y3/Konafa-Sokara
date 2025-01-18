@@ -81,4 +81,7 @@ class Product extends Model
         return $this->hasManyThrough(Addition::class, Category::class, 'id', 'category_id', 'category_id', 'id');   
     }
 
+    public function getPriceAfterDiscountAttribute(){
+        return $this->has_discount ? $this->discount_price : $this->price;
+    }
 }
