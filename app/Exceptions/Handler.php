@@ -2,11 +2,19 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Traits\HttpResponses;
 use Throwable;
+use Carbon\Carbon;
+use Illuminate\Http\ResponseTrait;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
+  use HttpResponses;
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -27,4 +35,33 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+
+  public function render($request, Throwable $exception) {
+    if ($request->is('api/*')) {
+      if ($exception instanceof ModelNotFoundException) {
+        $msg = 'العنصر غير موجود';
+      }
+
+      if ($exception instanceof NotFoundHttpException) {
+        $msg = 'ال url غير موجود';
+      }
+
+      if ($exception instanceof AuthenticationException) {
+        return $this->unauthenticatedResponse();
+      }
+
+      if ($exception instanceof ThrottleRequestsException) {
+          $retryAfter = (Carbon::now()->diffInMinutes(Carbon::parse($exception->getHeaders()['X-RateLimit-Reset']))) ?? 30;
+          return $this->failureResponse(__('apis.throttle', ['minutes' => $retryAfter]));
+      }
+
+      return $this->response('exception', $msg ?? $exception->getMessage(),
+        ['line' => $exception->getLine(), 'file' => $exception->getFile()],$exception->getCode()
+      );
+    }
+
+    return parent::render($request, $exception);
+  }
+
 }

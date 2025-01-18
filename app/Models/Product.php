@@ -74,4 +74,12 @@ class Product extends Model
         return $this->favoritedBy()->where('user_id', Auth::id())->exists();
     }
 
+    public function additions()
+    {
+        return $this->hasManyThrough(Addition::class, Category::class, 'id', 'category_id','sub_category_id','id');
+    }
+
+    public function getPriceAfterDiscountAttribute(){
+        return $this->has_discount ? $this->discount_price : $this->price;
+    }
 }

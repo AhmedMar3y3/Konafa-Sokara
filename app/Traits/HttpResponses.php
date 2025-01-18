@@ -32,6 +32,10 @@ trait HttpResponses
         return $this->response('CompletetionNeeded', $message = 'يرجي إكمال البيانات', $data, $statusCode = 200);
     }
 
+    public function unauthenticatedResponse(){
+        return $this->response('unauthenticated', $message = 'غير مصرح', $data = '', $statusCode = 400);
+    }
+
     public function failureResponse($message = 'Failure', $statusCode = 400)
     {
         return $this->response('failure', $message, '', $statusCode);
