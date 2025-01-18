@@ -44,7 +44,7 @@
                     </a>
                 </td>
                 <td>{{ $category->name }}</td>
-                <td>  <img src="{{ asset('/images/category/' . basename($category->image)) }}" alt="Image" style="width: auto;"></td>
+                <td>  <img src="{{ $category->image}}" alt="Image" style="width: auto;"></td>
                 <td>{{ $category->id }}</td>
             </tr>
 
