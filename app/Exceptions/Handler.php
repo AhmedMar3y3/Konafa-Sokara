@@ -57,8 +57,7 @@ class Handler extends ExceptionHandler
       }
 
       return $this->response('exception', $msg ?? $exception->getMessage(),
-        ['line' => $exception->getLine(), 'file' => $exception->getFile()],$exception->getCode()
-      );
+        ['line' => $exception->getLine(), 'file' => $exception->getFile()],500);
     }
 
     return parent::render($request, $exception);
