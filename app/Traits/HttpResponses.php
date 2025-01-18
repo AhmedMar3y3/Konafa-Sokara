@@ -5,7 +5,7 @@ namespace App\Traits;
 trait HttpResponses
 {
 
-    public function response($key,$message,$data = '',$statusCode){
+    public function response($key,$message,$data = [],$statusCode){
 
         return response()->json([
             'key' => $key,
@@ -17,27 +17,27 @@ trait HttpResponses
 
     public function successResponse($message = 'تم بنجاح')
     {
-        return $this->response('success', $message, $data = '', 200);
+        return $this->response('success', $message, [], 200);
     }
 
     public function successWithDataResponse($data){
-        return $this->response('success', $message = 'تم بنجاح', $data, 200);
+        return $this->response('success', 'تم بنجاح', $data, 200);
     }
     public function inactiveUserResponse($data)
     {
-        return $this->response('ActivationNeeded', $message = 'يرجي تأكيد الحساب', $data, $statusCode = 200);
+        return $this->response('ActivationNeeded', 'يرجي تأكيد الحساب', $data, 200);
     }
     public function incompletedUserResponse($data)
     {
-        return $this->response('CompletetionNeeded', $message = 'يرجي إكمال البيانات', $data, $statusCode = 200);
+        return $this->response('CompletetionNeeded', 'يرجي إكمال البيانات', $data, 200);
     }
 
     public function unauthenticatedResponse(){
-        return $this->response('unauthenticated', $message = 'غير مصرح', $data = '', $statusCode = 400);
+        return $this->response('unauthenticated', 'غير مصرح', [], 401);
     }
 
-    public function failureResponse($message = 'Failure', $statusCode = 400)
+    public function failureResponse($message)
     {
-        return $this->response('failure', $message, '', $statusCode);
+        return $this->response('failure', $message, [], 400);
     }
 }
