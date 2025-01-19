@@ -84,7 +84,7 @@
             </div>
             @empty
             <tr>
-                <td colspan="3" class="text-center">لا توجد فئات متاحة.</td>
+                <td colspan="12" class="text-center">لا توجد فئات متاحة.</td>
             </tr>
             @endforelse
         </tbody>

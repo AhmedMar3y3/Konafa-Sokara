@@ -159,7 +159,7 @@
         <span class="text-danger">@error('email'){{ $message }}@enderror</span>
 
         <label for="password">Password</label>
-        <input type="password" name="password" placeholder="Passwird">
+        <input type="password" name="password" placeholder="Password">
         <span class="text-danger">@error('password'){{ $message }}@enderror</span>
 
         <button type="submit">Login</button>
