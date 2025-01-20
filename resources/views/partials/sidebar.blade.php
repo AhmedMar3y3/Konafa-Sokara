@@ -1,8 +1,7 @@
 <!-- resources/views/partials/sidebar.blade.php -->
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo" href="{{ route('admin.dashboard') }}"><img src="{{ asset("assets/images/logo.svg") }}" alt="logo" /></a>
-        <a class="sidebar-brand brand-logo-mini" href="{{ route('admin.dashboard') }}"><img src="{{ asset("assets/images/logo-mini.svg") }}" alt="logo" /></a>
+        <a class="sidebar-brand brand-logo text-decoration-none ms-5" href="{{ route('admin.dashboard') }}" style="color: white">كنافة & سكرة</a>
     </div>
     <ul class="nav">
         <li class="nav-item profile">
@@ -78,7 +77,7 @@
         </li>
         <li class="nav-item menu-items">
             <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.settings.index') }}">
-                <span class="menu-title">الإعدادات</span>
+                <span class="menu-title me-2">الإعدادات</span>
                 <span class="menu-icon">
                     <i class="fa fa-cogs"></i>
                 </span>
