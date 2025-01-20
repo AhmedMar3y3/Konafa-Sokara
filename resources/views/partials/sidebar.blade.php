@@ -1,8 +1,36 @@
 <!-- resources/views/partials/sidebar.blade.php -->
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo text-decoration-none ms-5" href="{{ route('admin.dashboard') }}" style="color: white">كنافة & سكرة</a>
-    </div>
+
+    <ul class="sidebar-brand-wrapper d-lg-flex align-items-center justify-content-center fixed-top ">
+
+        <li class="nav-item dropdown me-5" style="list-style-type: none;">
+            <a class="nav-link " id="profileDropdown" href="#" data-bs-toggle="dropdown">
+            <div class="navbar-profile d-flex gap-2">
+                
+                <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ Auth::guard('admin')->user()->name }}</p>
+                <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                <img class="img-xs rounded-circle" src="{{ asset("../../../assets/images/dashboard/avatar.png") }}" alt="">
+            </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="profileDropdown">
+            <h6 class="p-3 mb-0">Profile</h6>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item preview-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <div class="preview-thumbnail">
+                <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-logout text-danger"></i>
+                </div>
+                </div>
+                <div class="preview-item-content">
+                <p class="preview-subject mb-1">Log out</p>
+                </div>
+            </a>
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            </div>
+        </li>
+    </ul>
     <ul class="nav">
         <li class="nav-item profile">
             <div class="profile-desc">
