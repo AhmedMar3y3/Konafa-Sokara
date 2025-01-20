@@ -2,7 +2,7 @@
 @section('main')
 
 <div class="container text-end">
-    <h2>جميع المنتجات</h2>
+    <h2 style="color: black">جميع المنتجات</h2>
 
     <!-- Success Message -->
     @if (Session::has('success'))
@@ -59,7 +59,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="12" class="text-center">لا توجد منتجات متاحة.</td>
+                <td colspan="12" class="text-center"  style="color: black">لا توجد منتجات متاحة.</td>
             </tr>
             @endforelse
         </tbody>

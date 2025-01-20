@@ -6,9 +6,9 @@
            
             <div class="container-fluid page-body-wrapper">
                 @include('partials.navbar')
-                <div class="main-panel">
-                    <div class="content-wrapper">
-                        <main id="main" class="main">
+                <div class="main-panel" >
+                    <div class="content-wrapper" style="background-color: #F6D2D4">
+                        <main id="main" class="main" >
                             @yield('main')
                         </main>
                     </div>

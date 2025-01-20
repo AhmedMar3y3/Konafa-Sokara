@@ -53,7 +53,7 @@
             </tr>
 
             <!-- Show Banner Modal -->
-            <div class="modal fade text-end" id="showBannerModal{{ $banner->id }}" tabindex="-1" aria-labelledby="showBannerModalLabel{{ $banner->id }}" aria-hidden="true">
+            <div class="modal fade text-end"  id="showBannerModal{{ $banner->id }}" tabindex="-1" aria-labelledby="showBannerModalLabel{{ $banner->id }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -127,12 +127,12 @@
                     <!-- Banner Name -->
                     <div class="mb-3">
                         <label for="bannerName" class="form-label">الاسم</label>
-                        <input type="text" name="name" class="form-control text-end" id="bannerName" required>
+                        <input  type="text" name="name" class="form-control text-end" id="bannerName" required>
                     </div>
                     <!-- Banner Image -->
                     <div class="mb-3">
                         <label for="bannerImage" class="form-label">الصورة</label>
-                        <input type="file" name="image" class="form-control text-end" id="bannerImage" required>
+                        <input  type="file" name="image" class="form-control text-end" id="bannerImage" required>
                     </div>
                 </div>
                 <div class="modal-footer">

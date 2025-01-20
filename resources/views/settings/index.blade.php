@@ -17,7 +17,7 @@
         @method('PUT')
 
         <div class="mb-3">
-            <label for="delivery_price" class="form-label text-end">سعر التوصيل</label>
+            <label for="delivery_price" class="form-label text-end" style="color: black">سعر التوصيل</label>
             <input type="number" name="delivery_price" class="form-control text-end" id="delivery_price" value="{{ $deliveryPrice->value ?? '' }}" required>
         </div>
 

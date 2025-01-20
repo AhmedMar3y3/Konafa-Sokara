@@ -3,167 +3,175 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Login Form</title>
+    <title>Login</title>
     <!-- Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
+
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
+        /* Colors */
+body {
+    font-family: 'Asap', sans-serif;
+}
 
-        body {
-            background-color: #080710;
-            font-family: 'Poppins', sans-serif;
-        }
+.login {
+    overflow: hidden;
+    background-color: white;
+    padding: 40px 30px 30px 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    width: 400px;
+    transform: translate(-50%, -50%);
+    transition: transform 300ms, box-shadow 300ms;
+    box-shadow: 5px 10px 10px rgba(2, 128, 144, 0.2);
+}
 
-        .background {
-            width: 430px;
-            height: 520px;
-            position: absolute;
-            transform: translate(-50%, -50%);
-            left: 50%;
-            top: 50%;
-        }
+.login::before,
+.login::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-top-left-radius: 40%;
+    border-top-right-radius: 45%;
+    border-bottom-left-radius: 35%;
+    border-bottom-right-radius: 40%;
+    z-index: -1;
+}
 
-        .background .shape {
-            height: 200px;
-            width: 200px;
-            position: absolute;
-            border-radius: 50%;
-        }
+.login::before {
+    left: 40%;
+    bottom: -130%;
+    background-color: rgba(69, 105, 144, 0.15);
+    animation: wawes 6s infinite linear;
+}
 
-        .shape:first-child {
-            background: linear-gradient(#1845ad, #23a2f6);
-            left: -80px;
-            top: -80px;
-        }
+.login::after {
+    left: 35%;
+    bottom: -125%;
+    background-color: rgba(2, 128, 144, 0.2);
+    animation: wawes 7s infinite linear;
+}
 
-        .shape:last-child {
-            background: linear-gradient(to right, #ff512f, #f09819);
-            right: -30px;
-            bottom: -80px;
-        }
+.login>input {
+    font-family: 'Asap', sans-serif;
+    display: block;
+    border-radius: 5px;
+    font-size: 16px;
+    background: white;
+    width: 100%;
+    border: 0;
+    padding: 10px 10px;
+    margin: 15px -10px;
+}
 
-        form {
-            height: 520px;
-            width: 400px;
-            background-color: rgba(255, 255, 255, 0.13);
-            position: absolute;
-            transform: translate(-50%, -50%);
-            top: 50%;
-            left: 50%;
-            border-radius: 10px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-            padding: 50px 35px;
-            text-align: right;
-        }
+.login>button {
+    font-family: 'Asap', sans-serif;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    width: 80px;
+    border: 0;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-left: -5px;
+    border-radius: 5px;
+    background-color: rgba(244, 91, 105, 1);
+    transition: background-color 300ms;
+}
 
-        form * {
-            color: #ffffff;
-            letter-spacing: 0.5px;
-            outline: none;
-            border: none;
-        }
+.login>button:hover {
+    background-color: rgba(219, 81, 94, 1);
+    /* darkened color */
+}
 
-        form h3 {
-            font-size: 32px;
-            font-weight: 500;
-            line-height: 42px;
-            text-align: center;
-        }
+@keyframes wawes {
+    from {
+        transform: rotate(0);
+    }
 
-        label {
-            display: block;
-            margin-top: 30px;
-            font-size: 16px;
-            font-weight: 500;
-        }
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-        input {
-            display: block;
-            height: 50px;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.07);
-            border-radius: 3px;
-            padding: 0 10px;
-            margin-top: 8px;
-            font-size: 14px;
-            font-weight: 300;
-        }
-
-        ::placeholder {
-            color: #e5e5e5;
-        }
-
-        button {
-            margin-top: 50px;
-            width: 100%;
-            background-color: #ffffff;
-            color: #080710;
-            padding: 15px 0;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .text-danger {
-            font-size: 12px;
-            color: #ff6b6b;
-        }
-
-        .alert {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
+a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    font-size: 12px;
+}
+.cover-image {
+    width: 100%;
+    height: 400px;
+}
+.cover-image img {
+    width: 100%;
+    height: 100%;
+}
+.line {
+    width: 100%;
+    position: absolute;
+    height: 50px;
+    bottom: 284px
+}
+.line img {
+    width: 100%;
+    height: 100%;
+}
+.form-title {
+    position: absolute;
+    left: 50%;
+    bottom: 400px;
+    transform: translate(-50%, -50%);
+}
     </style>
 </head>
 
 <body>
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-12 p-0">
+                <div class="cover-image">
+                    <img src="{{ asset('assets/images/login/Vector 1.jpg') }}">
+                
+                </div>
+            </div>
+           <div class="col-12 text-center">
+            <div class="form">
+                <div class="form-title d-flex">
+                    <img src="{{ asset('assets/images/login/sokara.png') }}" alt="Sokara">
+                    <img src="{{ asset('assets/images/login/konafa.png') }}" alt="Konafa">
+                </div>
+                <form class="login mt-3" action="{{ route('loginUser') }}" method="POST">
+                    @csrf
+                    
+                    @if (Session::has('success'))
+                    <div class="alert alert-success">{{ Session::get('success') }}</div>
+                    @endif
+                    @if (Session::has('error'))
+                    <div class="alert alert-danger">{{ Session::get('error') }}</div>
+                    @endif
+         
+                    <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+                    <span class="text-danger">@error('email'){{ $message }}@enderror</span>
+         
+                    <input type="password" name="password" placeholder="Password">
+         
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+           </div>
+        </div>
     </div>
-    <form action="{{ route('loginUser') }}" method="POST">
-        @csrf
-        
-        @if (Session::has('success'))
-        <div class="alert alert-success" style="background:#28272f; color: white;">{{ Session::get('success') }}</div>
-        @endif
-        @if (Session::has('error'))
-        <div class="alert alert-danger">{{ Session::get('error') }}</div>
-        @endif
-        <h3>Login Form</h3>
-
-
-        <label for="email">Email</label>
-        <input type="email" name="email" placeholder="Type your email" value="{{ old('email') }}">
-        <span class="text-danger">@error('email'){{ $message }}@enderror</span>
-
-        <label for="password">Password</label>
-        <input type="password" name="password" placeholder="Password">
-        <span class="text-danger">@error('password'){{ $message }}@enderror</span>
-
-        <button type="submit">Login</button>
-    </form>
 </body>
 
 </html>

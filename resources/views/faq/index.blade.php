@@ -103,7 +103,7 @@
             </div>
             @empty
             <tr>
-                <td colspan="3" class="text-center">لا توجد أسئلة متاحة.</td>
+                <td colspan="12" class="text-center">لا توجد أسئلة متاحة.</td>
             </tr>
             @endforelse
         </tbody>
