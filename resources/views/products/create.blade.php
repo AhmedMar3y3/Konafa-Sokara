@@ -1,4 +1,32 @@
 @extends('layout')
+@section('styles')
+<style>
+    .image-upload-square {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        width: 250px; 
+        height: 250px;
+        border-radius: 15px;
+    }
+
+    .image-upload-square img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .image-upload-square:hover {
+        background-color: #9fa0a0;
+    }
+</style>
+@endsection
 @section('main')
 
 <div class="container text-end">
@@ -14,14 +42,23 @@
             <div class="alert alert-danger">{{ Session::get('error') }}</div>
         @endif
 
+        <div class="text-center">
+            <label for="">{{__('admin.image')}}</label>
+            <div class="mb-3 d-flex justify-content-center align-items-center">
+                <div id="imageContainer" class="image-upload-square border">
+                </div>
+            </div>
+            <input type="file" id="image" name="image" class="form-control d-none" accept="image/*">
+        </div>
+
         <div class="mb-3">
             <label for="name" class="form-label">اسم المنتج</label>
             <input type="text" name="name" class="form-control text-end" id="name" required>
         </div>
-        <div class="mb-3">
+        {{-- <div class="mb-3">
             <label for="image" class="form-label">صورة المنتج</label>
             <input type="file" name="image" class="form-control text-end" style="" id="image" required>
-        </div>
+        </div> --}}
         <div class="mb-3">
             <label for="description" class="form-label">وصف المنتج</label>
             <textarea name="description" class="form-control text-end" id="description"></textarea>
@@ -119,6 +156,51 @@
             pointsField.style.display = this.checked ? 'none' : 'block';
             pointsInput.disabled = this.checked;
         });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const imageInput = document.getElementById('image');
+        const imageContainer = document.getElementById('imageContainer');
+
+        // Handle clicking on the container to open file dialog
+        imageContainer.addEventListener('click', function () {
+            imageInput.click();
+        });
+
+        imageInput.addEventListener('change', function () {
+            const file = imageInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    // Update container HTML with image and remove button
+                    imageContainer.innerHTML = `
+                        <img id="previewImage" src="${e.target.result}" 
+                            alt="Image Preview" 
+                            style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
+
+                        <button id="removeImage" type="button" 
+                                class="btn btn-danger btn-sm" 
+                                style="position: absolute; top: 5px; right: 5px;">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+
+                    // Add event listener to the remove button
+                    document.getElementById('removeImage').addEventListener('click', function (e) {
+                        // Reset input value and container HTML (empty container)
+                        e.stopPropagation(); // Prevent file input click from being triggered
+                        imageInput.value = '';
+                        imageContainer.innerHTML = ''; // Remove image and button
+                    });
+                };
+
+                reader.readAsDataURL(file); // Read the file as a data URL
+            }
+        });
+
     });
 </script>
 
