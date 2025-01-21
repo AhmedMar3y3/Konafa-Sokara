@@ -1,4 +1,32 @@
 @extends('layout')
+@section('styles')
+<style>
+    .image-upload-square {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        width: 250px; 
+        height: 250px;
+        border-radius: 15px;
+    }
+
+    .image-upload-square img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .image-upload-square:hover {
+        background-color: #9fa0a0;
+    }
+</style>
+@endsection
 @section('main')
 
 <div class="container text-end">
@@ -61,8 +89,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p><strong>الاسم:</strong> {{ $banner->name }}</p>
-                            <p><strong>الصورة:</strong></p>
+                            <p style="color: black"><strong>الاسم:</strong> {{ $banner->name }}</p>
+                            <p style="color: black"><strong>الصورة</strong></p>
                             <img src="{{ asset('/images/banner/' . basename($banner->image)) }}" alt="Image" style="width: 200px;">
                         </div>
                         <div class="modal-footer">
@@ -90,10 +118,22 @@
                                     <input type="text" name="name" class="form-control text-end" id="editBannerName{{ $banner->id }}" value="{{ $banner->name }}" required>
                                 </div>
                                 <!-- Banner Image -->
-                                <div class="mb-3">
-                                    <label for="editBannerImage{{ $banner->id }}" class="form-label">الصورة</label>
-                                    <input type="file" name="image" class="form-control text-end" id="editBannerImage{{ $banner->id }}">
-                                    <small class="text-muted">اترك الحقل فارغًا إذا كنت لا تريد تغيير الصورة.</small>
+                                <div class="text-center">
+                                    <label for="">{{__('admin.image')}}</label>
+                                    <div class="mb-3 d-flex justify-content-center align-items-center">
+                                        <div id="imageContainer{{ $banner->id }}" class="image-upload-square border">
+                                            <img id="previewImage{{ $banner->id }}" src="{{ $banner->image }}" 
+                                                    alt="Image Preview" 
+                                                    style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
+                        
+                                            <button id="removeImage{{ $banner->id }}" type="button" 
+                                                    class="btn btn-danger btn-sm" 
+                                                    style="position: absolute; top: 5px; right: 5px;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="image{{ $banner->id }}" name="image" class="form-control d-none" accept="image/*">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -130,9 +170,13 @@
                         <input  type="text" name="name" class="form-control text-end" id="bannerName" required>
                     </div>
                     <!-- Banner Image -->
-                    <div class="mb-3">
-                        <label for="bannerImage" class="form-label">الصورة</label>
-                        <input  type="file" name="image" class="form-control text-end" id="bannerImage" required>
+                    <div class="text-center">
+                        <label for="">{{__('admin.image')}}</label>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                            <div id="imageContainerCreate" class="image-upload-square border">
+                            </div>
+                        </div>
+                        <input type="file" id="imageCreate" name="image" class="form-control d-none" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -144,4 +188,52 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle image upload and removal for all modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            const imageInput = modal.querySelector('input[type="file"]');
+            const imageContainer = modal.querySelector('.image-upload-square');
+
+            if (imageContainer && imageInput) {
+                // Handle clicking on the container to open file dialog
+                imageContainer.addEventListener('click', function () {
+                    imageInput.click();
+                });
+
+                // Handle file input change
+                imageInput.addEventListener('change', function () {
+                    const file = imageInput.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            // Update container HTML with image and remove button
+                            imageContainer.innerHTML = `
+                                <img src="${e.target.result}" 
+                                     alt="Image Preview" 
+                                     style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
+                                <button type="button" 
+                                        class="btn btn-danger btn-sm" 
+                                        style="position: absolute; top: 5px; right: 5px;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            `;
+
+                            // Add event listener to the remove button
+                            const removeButton = imageContainer.querySelector('button');
+                            removeButton.addEventListener('click', function (e) {
+                                e.stopPropagation(); // Prevent file input click from being triggered
+                                imageInput.value = '';
+                                imageContainer.innerHTML = ''; // Remove image and button
+                            });
+                        };
+
+                        reader.readAsDataURL(file); // Read the file as a data URL
+                    }
+                });
+            }
+        });
+    });
+</script>
 @endsection

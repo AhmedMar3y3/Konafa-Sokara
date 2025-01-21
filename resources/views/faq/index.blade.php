@@ -60,8 +60,8 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p><strong>السؤال:</strong> {{ $faq->question }}</p>
-                            <p><strong>الإجابة:</strong> {{ $faq->answer }}</p>
+                            <p style="color: black"><strong>السؤال:</strong> {{ $faq->question }}</p>
+                            <p style="color: black"><strong>الإجابة:</strong> {{ $faq->answer }}</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>

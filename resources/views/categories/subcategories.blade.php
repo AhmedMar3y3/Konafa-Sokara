@@ -1,4 +1,32 @@
 @extends('layout')
+@section('styles')
+<style>
+    .image-upload-square {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        width: 250px; 
+        height: 250px;
+        border-radius: 15px;
+    }
+
+    .image-upload-square img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .image-upload-square:hover {
+        background-color: #9fa0a0;
+    }
+</style>
+@endsection
 @section('main')
 
 <div class="container text-end">
@@ -41,8 +69,7 @@
                     </button>
                 </td>
                 <td>{{ $subcategory->name }}</td>
-                <td>  <img src="{{ asset('/images/category/' . basename($subcategory->image)) }}" alt="Image" style="width: auto;"></td>
-
+                <td class="p-0">  <img src="{{ $subcategory->image}}" alt="Image" style="border-radius: 0%; height: 55px; width: 55px;" ></td>
                 <td>{{ $subcategory->id }}</td>
             </tr>
 
@@ -64,14 +91,24 @@
                                     <input type="text" name="name" class="form-control text-end" id="editSubCategoryName{{ $subcategory->id }}" value="{{ $subcategory->name }}" required>
                                 </div>
                                 <!-- Subcategory Image -->
-                                <div class="mb-3">
-                                    <label for="editSubCategoryImage{{ $subcategory->id }}" class="form-label">صورة الفئة الفرعية</label>
-                                    <input type="file" name="image" class="form-control text-end" id="editSubCategoryImage{{ $subcategory->id }}">
-                                    @if ($subcategory->image)
-                                        <img src="{{ $subcategory->image }}" alt="Subcategory Image" width="100" class="mt-2">
-                                    @endif
+                                <div class="text-center">
+                                    <label for="">{{__('admin.image')}}</label>
+                                    <div class="mb-3 d-flex justify-content-center align-items-center">
+                                        <div id="imageContainer{{ $subcategory->id }}" class="image-upload-square border">
+                                            <img id="previewImage{{ $subcategory->id }}" src="{{ $subcategory->image }}" 
+                                                    alt="Image Preview" 
+                                                    style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
+                        
+                                            <button id="removeImage{{ $subcategory->id }}" type="button" 
+                                                    class="btn btn-danger btn-sm" 
+                                                    style="position: absolute; top: 5px; right: 5px;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <input type="file" id="image{{ $subcategory->id }}" name="image" class="form-control d-none" accept="image/*">
                                 </div>
-                            </div>
+                            </div> <!-- Closing tag for modal-body -->
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
@@ -106,9 +143,13 @@
                         <input type="text" name="name" class="form-control text-end" id="subCategoryName" required>
                     </div>
                     <!-- Subcategory Image -->
-                    <div class="mb-3">
-                        <label for="subCategoryImage" class="form-label">صورة الفئة الفرعية</label>
-                        <input type="file" name="image" class="form-control text-end" id="subCategoryImage">
+                    <div class="text-center">
+                        <label for="">{{__('admin.image')}}</label>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                            <div id="imageContainerCreate" class="image-upload-square border">
+                            </div>
+                        </div>
+                        <input type="file" id="imageCreate" name="image" class="form-control d-none" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -119,5 +160,52 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle image upload and removal for all modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            const imageInput = modal.querySelector('input[type="file"]');
+            const imageContainer = modal.querySelector('.image-upload-square');
 
+            if (imageContainer && imageInput) {
+                // Handle clicking on the container to open file dialog
+                imageContainer.addEventListener('click', function () {
+                    imageInput.click();
+                });
+
+                // Handle file input change
+                imageInput.addEventListener('change', function () {
+                    const file = imageInput.files[0];
+
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            // Update container HTML with image and remove button
+                            imageContainer.innerHTML = `
+                                <img src="${e.target.result}" 
+                                     alt="Image Preview" 
+                                     style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
+                                <button type="button" 
+                                        class="btn btn-danger btn-sm" 
+                                        style="position: absolute; top: 5px; right: 5px;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            `;
+
+                            // Add event listener to the remove button
+                            const removeButton = imageContainer.querySelector('button');
+                            removeButton.addEventListener('click', function (e) {
+                                e.stopPropagation(); // Prevent file input click from being triggered
+                                imageInput.value = '';
+                                imageContainer.innerHTML = ''; // Remove image and button
+                            });
+                        };
+
+                        reader.readAsDataURL(file); // Read the file as a data URL
+                    }
+                });
+            }
+        });
+    });
+</script>
 @endsection
