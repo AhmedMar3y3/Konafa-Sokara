@@ -4,6 +4,7 @@ namespace App\Services\User\Cart;
 
 use App\Http\Resources\Api\User\Cart\CartItemsResource;
 use App\Models\Cart;
+use App\Models\Setting;
 
 class GetCartSummaryService
 {
@@ -22,10 +23,12 @@ class GetCartSummaryService
             return $cartItem->price;
         });
 
+        $deliveryPrice = Setting::where('key', 'delivery_price')->value('value');
+
         return [
-            'prices'            => $totalPrice,
-            'delivery_price'    => 50,
-            'total'             => $totalPrice + 50,
+            'price'            => $totalPrice,
+            'delivery_price'   => (float)$deliveryPrice,
+            'total_price'      => $totalPrice + $deliveryPrice,
         ];
     }
 

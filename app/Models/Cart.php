@@ -34,7 +34,11 @@ class Cart extends Model
         return (float) ($this->product->priceAfterDiscount * ($this->quantity - $this->free_quantity)) + $this->getAdditionsPrices();
     }
 
+    public function getItemPriceAttribute(){
+        return (float) ($this->product->priceAfterDiscount * ($this->quantity - $this->free_quantity));
+    }
+
     public function getAdditionsPrices(){
-        return $this->additions->sum('price');
+        return $this->additions->sum('price') * $this->quantity;
     }
 }

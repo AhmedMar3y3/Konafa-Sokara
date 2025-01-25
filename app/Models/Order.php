@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -27,6 +28,8 @@ class Order extends Model
         'delivery_price',
         'status',
         'total_price',
+        'pay_type',
+        'pay_status',
     ];
 
     public function user()
@@ -39,4 +42,21 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    private static function generateOrderNum()
+    {
+        do {
+            $orderNum = Str::random(8);
+        } while (self::where('order_num', $orderNum)->exists());
+
+        return $orderNum;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->order_num = self::generateOrderNum();
+        });
+    }
 }
