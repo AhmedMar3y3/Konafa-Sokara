@@ -37,6 +37,11 @@ class RegisterRequest extends BaseRequest
                 Rule::unique('delegates', 'email')->whereNull('deleted_at'),
             ],
             'password'     => 'required|string',
+            'admin_code'=> [
+                'required',
+                'string',
+                Rule::exists('admins', 'code'),
+            ],
         ];
     }
 }

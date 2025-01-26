@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Delegate;
 
+use App\Models\Admin;
 use App\Models\Delegate;
 use App\Traits\HttpResponses;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Api\Delegate\DelegateResource;
 use App\Http\Requests\Api\Delegate\LoginRequest;
 use App\Http\Requests\Api\Delegate\VerifyRequest;
@@ -15,13 +16,17 @@ use App\Http\Requests\Api\Delegate\ResendCodeRequest;
 use App\Http\Requests\Api\Delegate\ResetPasswordRequest;
 use App\Http\Requests\Api\Delegate\ResetPasswordSendCodeRequest;
 use App\Http\Requests\Api\Delegate\ResetPasswordCheckCodeRequest;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     use HttpResponses;
      public function register(RegisterRequest $request)
     {
+        $adminCode = Admin::where('code', $request->admin_code)->first();
+
+    if (!$adminCode) {
+        return $this->failureResponse('كود المسؤول غير صحيح');
+    }
         $delegate = Delegate::create($request->validated());
 
         $delegate->sendVerificationCode();

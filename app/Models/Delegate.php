@@ -26,6 +26,7 @@ class Delegate extends Model
         'code',
         'code_expire',
         'is_verified',
+        'admin_code',
     ];
 
     protected $hidden = [

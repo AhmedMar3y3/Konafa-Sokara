@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(false);
             $table->dateTime('code_expire')->nullable();
             $table->boolean('is_verified')->default(false);
+            $table->string('admin_code');
             $table->softDeletes();
             $table->timestamps();
         });
