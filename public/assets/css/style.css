@@ -22010,7 +22010,8 @@ code {
 
 /* Cards */
 .card {
-  border-radius: 0.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4) !important;
 }
 .card .card-body {
   padding: 1.75rem 1.5625rem;
