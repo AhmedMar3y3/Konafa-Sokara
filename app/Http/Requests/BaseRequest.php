@@ -18,7 +18,7 @@ class BaseRequest extends FormRequest
     }
 
     protected function failedValidation(Validator $validator) {
-        if (request()->is('api/*')) {
+        if (request()->is('api/*','delegate/*')) {
             throw new HttpResponseException($this->failureResponse($validator->errors()->first()));
         }else{
             throw (new ValidationException($validator))
