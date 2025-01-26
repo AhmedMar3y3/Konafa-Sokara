@@ -27,7 +27,7 @@ Route::post('/reset-password-check-code'    ,[ResetPasswordController::class, 'c
 Route::post('/reset-password'               ,[ResetPasswordController::class, 'resetPassword']);
 
 // home routes //
-Route::get('/categories', [HomeController::class, 'categories']);
+Route::get('/categories'     , [HomeController::class, 'categories']);
 Route::get('/categories/{categoryId}/subcategory/{subcategoryId?}', [HomeController::class, 'products']);
 Route::get('/newest-products', [HomeController::class, 'newestProducts']);
 Route::get('/offers', [HomeController::class, 'offers']);
@@ -46,8 +46,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
     Route::post('/change-password', [ProfileController::class, 'changePassword']);
     Route::get('/faqs', [ProfileController::class, 'faqs']);
-// profile routes //
-
 
 // home routes //
     Route::get('/product/{id}', [HomeController::class, 'showProduct']);
@@ -65,7 +63,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //order
     Route::post('store-order'               ,[OrderController::class, 'store']);
-    Route::get('make-online-payment'        ,[OrderController::class, 'makeOnlinePayment']);
 
-    //order
 });
