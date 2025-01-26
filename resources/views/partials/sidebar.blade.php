@@ -56,6 +56,15 @@
             </a>
         </li>
         <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.orders.index') }}">
+              
+                <span class="menu-title me-2">الطلبات</span>
+                <span class="menu-icon">
+                    <i class="fa fa-shopping-cart"></i>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
             <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.categories.index') }}">
               
                 <span class="menu-title me-2">الفئات</span>
@@ -79,6 +88,15 @@
                 <span class="menu-title me-2">الإضافات</span>
                 <span class="menu-icon">
                     <i class="fa fa-plus-circle"></i>
+                </span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link d-flex d-block w-100 justify-content-end" href="{{ route('admin.delegates.index') }}">
+              
+                <span class="menu-title me-2">مندوبي التوصيل</span>
+                <span class="menu-icon">
+                    <i class="fa fa-solid fa-motorcycle"></i>
                 </span>
             </a>
         </li>

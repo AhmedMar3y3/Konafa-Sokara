@@ -37,6 +37,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function delegate()
+{
+    return $this->belongsTo(Delegate::class);
+}
+
     public function items()
     {
         return $this->hasMany(OrderItem::class);
