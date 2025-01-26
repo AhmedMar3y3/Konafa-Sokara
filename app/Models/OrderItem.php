@@ -9,18 +9,26 @@ class OrderItem extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'order_items';
 
     protected $fillable = [
         'order_id',
         'product_id',
         'quantity',
-        'price',
-        'is_free',
+        'free_quantity',
+        'product_price',
+        'total_price',
     ];
 
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function additions()
+    {
+        return $this->belongsToMany(Addition::class);
     }
 }

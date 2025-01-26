@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\User\CartController;
 use App\Http\Controllers\Api\User\HomeController;
 use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\FavouriteController;
+use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\ResetPasswordController;
+use App\Services\PaymentGateway\PaymentService;
 
 Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@register');
 
@@ -16,6 +18,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/verify-email', [AuthController::class, 'verifyEmail']);
 Route::post('/resend-code', [AuthController::class, 'resendCode']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('payment/get-payment-status'                 ,[PaymentService::class, 'callback'])->name('payment.getPaymentStatus');
 
 // reset password //
 Route::post('/reset-password-send-code'     ,[ResetPasswordController::class, 'sendCode']);
@@ -59,4 +63,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('delete-cart'               ,[CartController::class , 'deleteCart']);
     // cart
 
+    //order
+    Route::post('store-order'               ,[OrderController::class, 'store']);
+    Route::get('make-online-payment'        ,[OrderController::class, 'makeOnlinePayment']);
+
+    //order
 });

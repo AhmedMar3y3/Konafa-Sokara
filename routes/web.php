@@ -1,18 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\FAQController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\AdditionController;
-use App\Http\Controllers\Admin\FAQController;
+use App\Services\PaymentGateway\PaymentService;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\AdditionController;
+use App\Http\Controllers\Admin\CategoryController;
 
 //public routes
 Route::get('/', [AuthController::class, 'loadLoginPage'])->name('loginPage');
 Route::post('/login-admin', [AuthController::class, 'loginUser'])->name('loginUser');
+Route::get('payment/success/{transaction_id}/{status}'  ,[PaymentService::class, 'success'])->name('payment.success');
+Route::get('payment/failed/{transaction_id}/{status}'   ,[PaymentService::class, 'failed'])->name('payment.failed');
+
 
 //protected routes
 Route::middleware(['auth.admin'])->group(function () {

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->unsignedBigInteger('delegate_id');
+            $table->unsignedBigInteger('delegate_id')->nullable();
             $table->string('order_num');
             $table->decimal('lat',20,18);
             $table->decimal('lng',20,18);
@@ -26,6 +26,9 @@ return new class extends Migration
             $table->decimal('delivery_price');
             $table->decimal('total_price');
             $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('pay_type');
+            $table->tinyInteger('pay_status')->default(0);
+            $table->timestamps();
         });
     }
 
