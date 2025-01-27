@@ -21,6 +21,11 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request){
         $user = auth()->user();
+
+        if(! $user->carts()->exists()){
+            return $this->failureResponse('السله فارغه');
+        }
+        
         try{
             DB::beginTransaction();
             $addressData = $this->getAddressData($request->address_id);
