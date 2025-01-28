@@ -1,8 +1,44 @@
 @extends('layout')
+@section('styles')
+<style>
+    .image-upload-square {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        width: 250px; 
+        height: 250px;
+        border-radius: 15px;
+        margin: 0 auto; /* Center the container */
+    }
+
+    .image-upload-square img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+</style>
+@endsection
+
 @section('main')
 
 <div class="container text-end">
     <h2>تفاصيل المنتج</h2>
+
+    <!-- Image Container -->
+    <div class="text-center mb-3">
+        @if($product->image)
+            <div class="image-upload-square border">
+                <img src="{{ asset('/images/product/' . basename($product->image)) }}" alt="Image">
+            </div>
+        @else
+            <p>لا توجد صورة متاحة.</p>
+        @endif
+    </div>
 
     <!-- Product Details -->
     <div class="card">
@@ -19,14 +55,6 @@
                 <p class="card-text"><strong>النقاط:</strong> {{ $product->points }}</p>
             @endif
             <p class="card-text"><strong>الفئة :</strong> {{ $product->category->name }}</p>
-            <div class="mb-3">
-                @if($product->image)
-                    <p><strong>الصورة</strong></p>
-                    <img src="{{ asset('/images/product/' . basename($product->image)) }}" alt="Image" style="width: 200px;">
-                @else
-                    <p>No image available.</p>
-                @endif
-            </div>
         </div>
     </div>
 

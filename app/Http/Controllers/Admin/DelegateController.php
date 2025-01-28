@@ -23,6 +23,9 @@ class DelegateController extends Controller
     public function destroy($id)
     {
         $delegate = Delegate::find($id);
+        if ($delegate->orders()->where('status', 'الشحن')->count() > 0) {
+            return redirect()->route('admin.delegates.index')->with('error', 'لا يمكن حذف مندوب لديه طلبات في حالة الشحن');
+        }
         $delegate->delete();
         return redirect()->route('admin.delegates.index')->with('success', 'تم الحذف بنجاح');
     }
