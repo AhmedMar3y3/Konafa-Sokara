@@ -17,6 +17,7 @@ class AuthController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['code'] = $this->generateUniqueCode();
         $admin = Admin::create($validatedData);
         return response()->json($admin, 201);
     }
@@ -43,4 +44,12 @@ class AuthController extends Controller
         return redirect()->route('loginPage')->with('success', 'Logged out successfully');
     }
 
+    private function generateUniqueCode()
+    {
+        do {
+            $code = strtoupper(substr(md5(uniqid()), 0, 6));
+        } while (Admin::where('code', $code)->exists());
+
+        return $code;
+    }
 }
