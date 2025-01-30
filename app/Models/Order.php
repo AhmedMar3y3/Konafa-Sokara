@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Str;
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,6 +31,10 @@ class Order extends Model
         'total_price',
         'pay_type',
         'pay_status',
+    ];
+
+    protected $casts = [
+        'status' => OrderStatus::class,
     ];
 
     public function user()
