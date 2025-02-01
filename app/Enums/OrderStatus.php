@@ -2,11 +2,11 @@
 
 namespace App\Enums;
 
-enum OrderStatus: string
+enum OrderStatus: int
 {
-    case PREPARING = 'التجهيز';
-    case SHIPPING = 'الشحن';
-    case DELIVERED = 'التوصيل';
+    case PREPARING = 0;
+    case SHIPPING = 1;
+    case DELIVERED = 2;
 
     public function formattedName(): string
     {
