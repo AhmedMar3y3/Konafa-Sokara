@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api\User;
 use App\Models\Faq;
 use App\Traits\HttpResponses;
 use App\Helpers\ImageUploadHelper;
-use App\Http\Resources\FaqResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Api\User\\ProfileResource;
+use App\Http\Resources\Api\User\FaqResource;
+use App\Http\Resources\Api\User\ProfileResource;
 use App\Http\Requests\Api\User\Profile\DeleteAccountRequest;
 use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
 
@@ -29,12 +29,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if ($request->hasFile('image')) {
-            $imageUrl = ImageUploadHelper::uploadImage($request->file('image'), 'users');
-            $user->image = $imageUrl;
-        }
-
-        $user->update($request->except('image'));
+        $user->update($request->validated());
 
         return $this->successWithDataResponse(new ProfileResource($user));
     }
