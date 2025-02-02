@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Home\CategoryResource;
 use App\Http\Resources\Home\DiscountedProductResource;
+use App\Http\Resources\Home\MostSoldProductResource;
 use App\Http\Resources\Home\ProductResource;
 use App\Http\Resources\Home\ProductDetailsResource;
 use App\Models\Banner;
@@ -52,6 +53,10 @@ class HomeController extends Controller
 
     public function mostSoldProducts()
     {
+        $products = Product::withSum('orderItems as total_quantity', 'quantity')
+                            ->orderBy('total_quantity', 'desc')
+                            ->get();
 
+        return $this->successWithDataResponse(MostSoldProductResource::collection($products));
     }
 }
