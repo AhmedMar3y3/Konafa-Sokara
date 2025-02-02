@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Home\CategoryResource;
-use App\Http\Resources\Home\DiscountedProductResource;
-use App\Http\Resources\Home\ProductResource;
-use App\Http\Resources\Home\ProductDetailsResource;
 use App\Models\Banner;
-use App\Traits\HttpResponses;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
+use App\Traits\HttpResponses;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\User\Home\ProductResource;
+use App\Http\Resources\Api\User\Home\CategoryResource;
+use App\Http\Resources\Api\User\Home\PrizeProductResource;
+use App\Http\Resources\Api\User\Home\ProductDetailsResource;
+use App\Http\Resources\Api\User\Home\MostSoldProductResource;
+use App\Http\Resources\Api\User\Home\DiscountedProductResource;
 
 class HomeController extends Controller
 {
@@ -41,11 +43,6 @@ class HomeController extends Controller
         $banners = Banner::get(['id', 'image']);
         return $this->successWithDataResponse($banners);
     }
-    public function newestProducts()
-    {
-        $products = Product::orderBy('created_at', 'desc')->take(1)->get(['id', 'name', 'price', 'image']);
-        return $this->successWithDataResponse(ProductResource::collection($products));
-    }
 
     public function offers()
     {
@@ -57,6 +54,15 @@ class HomeController extends Controller
 
     public function mostSoldProducts()
     {
+        $products = Product::withSum('orderItems as total_quantity', 'quantity')
+                            ->orderBy('total_quantity', 'desc')
+                            ->get();
 
+        return $this->successWithDataResponse(MostSoldProductResource::collection($products));
+    }
+
+    public function prizeProducts(){
+        $products = Product::where('can_apply_prize', true)->get();
+        return $this->successWithDataResponse(PrizeProductResource::collection($products));
     }
 }

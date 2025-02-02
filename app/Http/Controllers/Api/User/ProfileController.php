@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
-use App\Http\Requests\Api\User\Profile\ChangePasswordRequest;
-use App\Helpers\ImageUploadHelper;
-use App\Http\Requests\Api\User\Profile\DeleteAccountRequest;
-use App\Http\Resources\ProfileResource;
-use App\Http\Resources\FaqResource;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Faq;
-
-
 use App\Traits\HttpResponses;
+use App\Helpers\ImageUploadHelper;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Api\User\FaqResource;
+use App\Http\Resources\Api\User\ProfileResource;
+use App\Http\Requests\Api\User\Profile\DeleteAccountRequest;
+use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
+
+
+use App\Http\Requests\Api\User\Profile\ChangePasswordRequest;
 
 class ProfileController extends Controller
 {
@@ -29,12 +29,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if ($request->hasFile('image')) {
-            $imageUrl = ImageUploadHelper::uploadImage($request->file('image'), 'users');
-            $user->image = $imageUrl;
-        }
-
-        $user->update($request->except('image'));
+        $user->update($request->validated());
 
         return $this->successWithDataResponse(new ProfileResource($user));
     }

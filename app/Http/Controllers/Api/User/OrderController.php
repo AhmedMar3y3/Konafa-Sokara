@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Api\User;
 use App\Enums\OrderPayTypes;
 use App\Models\Order;
 use App\Models\Address;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
-use App\Enums\PaymentTransactions;
 use App\Http\Controllers\Controller;
 use App\Services\Order\OrderItemsService;
 use App\Services\Order\OrderPricesService;
-use App\Services\PaymentGateway\PaymentService;
 use App\Http\Requests\Api\User\Order\StoreOrderRequest;
 use Illuminate\Support\Facades\DB;
 
