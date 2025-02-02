@@ -29,7 +29,6 @@ Route::post('/reset-password'               ,[ResetPasswordController::class, 'r
 // home routes //
 Route::get('/categories'     , [HomeController::class, 'categories']);
 Route::get('/categories/{categoryId}/subcategory/{subcategoryId?}', [HomeController::class, 'products']);
-Route::get('/newest-products', [HomeController::class, 'newestProducts']);
 Route::get('/offers', [HomeController::class, 'offers']);
 Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
 Route::get('/banners', [HomeController::class, 'banners']);

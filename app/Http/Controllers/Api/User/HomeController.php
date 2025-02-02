@@ -41,11 +41,6 @@ class HomeController extends Controller
         $banners = Banner::get(['id', 'image']);
         return $this->successWithDataResponse($banners);
     }
-    public function newestProducts()
-    {
-        $products = Product::orderBy('created_at', 'desc')->take(1)->get(['id', 'name', 'price', 'image']);
-        return $this->successWithDataResponse(ProductResource::collection($products));
-    }
 
     public function offers()
     {
