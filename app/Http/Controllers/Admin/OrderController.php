@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\AssignToDelegateRequest;
 use App\Models\Order;
 use App\Models\Delegate;
+use App\Enums\OrderStatus;
 
 class OrderController extends Controller
 {
@@ -15,17 +16,17 @@ class OrderController extends Controller
             ->orderByRaw("CASE WHEN status = 'التجهيز' THEN 0 ELSE 1 END")
             ->orderBy('created_at', 'desc')
             ->paginate(20);
-            
+
         $delegates = Delegate::where('is_active', true)->get();
-        
+
         return view("orders.index", compact("orders", "delegates"));
     }
 
     public function show($id)
     {
         $order = Order::with(['user', 'delegate', 'items'])
-                   ->findOrFail($id);
-                   
+            ->findOrFail($id);
+
         return view("orders.show", compact("order"));
     }
 
@@ -33,11 +34,9 @@ class OrderController extends Controller
     {
         $order->update([
             'delegate_id' => $request->delegate_id,
-            'status' => 'الشحن'
+            'status' => OrderStatus::SHIPPING->value,
         ]);
 
         return redirect()->back()->with('success', 'تم تعيين المندوب بنجاح');
     }
-
-
 }

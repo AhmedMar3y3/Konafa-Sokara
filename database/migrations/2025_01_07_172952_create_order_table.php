@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\OrderStatus;
+
 
 return new class extends Migration
 {
@@ -25,7 +27,7 @@ return new class extends Migration
             $table->decimal('vat_amount')->nullable();
             $table->decimal('delivery_price');
             $table->decimal('total_price');
-            $table->enum('status',['التجهيز','الشحن','التوصيل'])->default('التجهيز');
+            $table->string('status')->default(OrderStatus::PREPARING->value);
             $table->tinyInteger('pay_type');
             $table->tinyInteger('pay_status')->default(0);
             $table->timestamps();

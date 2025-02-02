@@ -102,4 +102,9 @@ class Delegate extends Model
         return Hash::check($password, $this->password);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 }

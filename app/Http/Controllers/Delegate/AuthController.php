@@ -22,15 +22,9 @@ class AuthController extends Controller
     use HttpResponses;
      public function register(RegisterRequest $request)
     {
-        $adminCode = Admin::where('code', $request->admin_code)->first();
-
-    if (!$adminCode) {
-        return $this->failureResponse('كود المسؤول غير صحيح');
-    }
+        Admin::where('code', $request->admin_code)->first();
         $delegate = Delegate::create($request->validated());
-
         $delegate->sendVerificationCode();
-
         return $this->successWithDataResponse(new DelegateResource($delegate));
     }
 

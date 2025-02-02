@@ -33,8 +33,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-                Route::middleware('api')
-                ->prefix('delegate')
+                Route::middleware(['api','api_lang'])
+                ->prefix('api/delegate')
                 ->group(base_path('routes/delegate.php'));
 
             Route::middleware('web')
