@@ -13,7 +13,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with(['user', 'delegate'])
-            ->orderByRaw("CASE WHEN status = 'التجهيز' THEN 0 ELSE 1 END")
+            ->orderBy( 'status' , 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
