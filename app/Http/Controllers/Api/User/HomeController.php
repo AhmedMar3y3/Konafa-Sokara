@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\Home\CategoryResource;
-use App\Http\Resources\Home\DiscountedProductResource;
-use App\Http\Resources\Home\MostSoldProductResource;
-use App\Http\Resources\Home\ProductResource;
-use App\Http\Resources\Home\ProductDetailsResource;
 use App\Models\Banner;
-use App\Traits\HttpResponses;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
+use App\Traits\HttpResponses;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\User\Home\ProductResource;
+use App\Http\Resources\Api\User\Home\CategoryResource;
+use App\Http\Resources\Api\User\Home\ProductDetailsResource;
+use App\Http\Resources\Api\User\Home\MostSoldProductResource;
+use App\Http\Resources\Api\User\Home\DiscountedProductResource;
 
 class HomeController extends Controller
 {

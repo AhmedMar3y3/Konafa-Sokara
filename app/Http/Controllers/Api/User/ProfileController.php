@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
-use App\Http\Requests\Api\User\Profile\ChangePasswordRequest;
-use App\Helpers\ImageUploadHelper;
-use App\Http\Requests\Api\User\Profile\DeleteAccountRequest;
-use App\Http\Resources\ProfileResource;
-use App\Http\Resources\FaqResource;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Faq;
-
-
 use App\Traits\HttpResponses;
+use App\Helpers\ImageUploadHelper;
+use App\Http\Resources\FaqResource;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Api\User\\ProfileResource;
+use App\Http\Requests\Api\User\Profile\DeleteAccountRequest;
+use App\Http\Requests\Api\User\Profile\UpdateProfileRequest;
+
+
+use App\Http\Requests\Api\User\Profile\ChangePasswordRequest;
 
 class ProfileController extends Controller
 {
