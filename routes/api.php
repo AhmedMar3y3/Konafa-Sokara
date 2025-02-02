@@ -53,6 +53,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/favourites', [FavouriteController::class, 'index']);
     Route::post('/toggle-favourite/{id}', [FavouriteController::class, 'toggleFavorite']);
 
+    // prize products
+    Route::get('/prize-products', [HomeController::class, 'prizeProducts']);
+    // prize products
+
     // cart
     Route::post('/add-to-cart'              ,[CartController::class , 'addToCart']);
     Route::get('/cart-summary'              ,[CartController::class , 'cartSummary']);

@@ -9,6 +9,7 @@ use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\User\Home\ProductResource;
 use App\Http\Resources\Api\User\Home\CategoryResource;
+use App\Http\Resources\Api\User\Home\PrizeProductResource;
 use App\Http\Resources\Api\User\Home\ProductDetailsResource;
 use App\Http\Resources\Api\User\Home\MostSoldProductResource;
 use App\Http\Resources\Api\User\Home\DiscountedProductResource;
@@ -58,5 +59,10 @@ class HomeController extends Controller
                             ->get();
 
         return $this->successWithDataResponse(MostSoldProductResource::collection($products));
+    }
+
+    public function prizeProducts(){
+        $products = Product::where('can_apply_prize', true)->get();
+        return $this->successWithDataResponse(PrizeProductResource::collection($products));
     }
 }
