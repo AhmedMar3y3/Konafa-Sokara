@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use App\Enums\OrderStatus;
+use Illuminate\Support\Str;
+use App\Enums\OrderPayTypes;
+use App\Enums\OrderPayStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,7 +36,9 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'status' => OrderStatus::class,
+        'status'    => OrderStatus::class,
+        'pay_type'  => OrderPayTypes::class,
+        'pay_status' => OrderPayStatus::class
     ];
 
     public function user()
