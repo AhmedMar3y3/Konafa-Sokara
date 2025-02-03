@@ -37,9 +37,9 @@ class Product extends Model
     //     return $this->orders()->where('status','!=', 3)->exists();
     // }
 
-    public function orders()
+    public function orderItems()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderItem::class);
     }
 
     public static function assignCategory(array $validated)
