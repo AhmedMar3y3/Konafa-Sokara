@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\login;
-use App\Http\Requests\admin\store;
 use App\Models\Admin;
+use App\Http\Requests\admin\store;
+use App\Http\Requests\admin\login;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     //API
     public function register(store $request)
     {
-        $validatedData = $request->validated();
-        $validatedData['password'] = Hash::make($validatedData['password']);
-        $validatedData['code'] = $this->generateUniqueCode();
-        $admin = Admin::create($validatedData);
+        if (Admin::exists()) {
+            return response()->json(['error' => 'المسؤول موجود بالفعل'], 403);
+        }
+        $admin = Admin::create($request->validated());
         return response()->json($admin, 201);
     }
 
@@ -32,24 +30,15 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard')->with('success', 'Successfully logged in');
+            return redirect()->route('admin.dashboard')->with('success', 'تم تسجيل الدخول بنجاح');
         }
-        return back()->withErrors(['error' => 'Invalid Credentials'])->withInput();
+        return back()->withErrors(['error' => 'خطأ في كلمة المرور او المستخدم'])->withInput();
     }
 
 
-    public function logout(Request $request)
+    public function logout()
     {
         Auth::logout();
-        return redirect()->route('loginPage')->with('success', 'Logged out successfully');
-    }
-
-    private function generateUniqueCode()
-    {
-        do {
-            $code = strtoupper(substr(md5(uniqid()), 0, 6));
-        } while (Admin::where('code', $code)->exists());
-
-        return $code;
+        return redirect()->route('loginPage')->with('success', 'تم تسجيل الخروج بنجاح');
     }
 }

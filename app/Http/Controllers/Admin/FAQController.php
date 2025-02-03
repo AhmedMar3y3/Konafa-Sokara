@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Faq;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\FAQ\StoreFaqRequest;
 use App\Http\Requests\admin\FAQ\UpdateFaqRequest;
-use App\Models\Faq;
-use Illuminate\Http\Request;
 
 class FAQController extends Controller
 {
@@ -28,7 +27,7 @@ class FAQController extends Controller
         return redirect()->route('admin.faqs.index')->with('success', 'تمت الاضافة بنجاح');
     }
 
-    public function update(UpdateFaqRequest $request,$id)
+    public function update(UpdateFaqRequest $request, $id)
     {
         Faq::findOrFail($id)->update($request->validated());
         return redirect()->route('admin.faqs.index')->with('success', 'تم التعديل بنجاح');

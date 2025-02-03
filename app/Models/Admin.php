@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Support\Facades\Hash;
 
 class Admin extends Authenticatable
 {
@@ -28,4 +28,28 @@ class Admin extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($admin) {
+            if (empty($admin->code)) {
+                $admin->code = self::generateUniqueCode();
+            }
+        });
+    }
+
+    protected static function generateUniqueCode()
+    {
+        do {
+            $code = strtoupper(substr(md5(uniqid()), 0, 6));
+        } while (self::where('code', $code)->exists());
+
+        return $code;
+    }
 }

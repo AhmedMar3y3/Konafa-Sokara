@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\Category\StoreCategoryRequest;
 use App\Http\Requests\admin\Category\UpdateCategoryRequest;
-use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -34,7 +34,7 @@ class CategoryController extends Controller
     // Store a new subcategory
     public function storeSubCategory(StoreCategoryRequest $request, $parentId)
     {
-        Category::create($request->validated() + ['parent_id'=>$parentId]);
+        Category::create($request->validated() + ['parent_id' => $parentId]);
         return redirect()->back()->with('success', 'تم إنشاء الفئة الفرعية بنجاح.');
     }
 
@@ -49,7 +49,7 @@ class CategoryController extends Controller
     // Update a category
     public function update(UpdateCategoryRequest $request, $id)
     {
-       Category::find($id)->update($request->validated());
+        Category::find($id)->update($request->validated());
         return redirect()->back()->with('success', 'تم تحديث الفئة بنجاح.');
     }
 
@@ -64,4 +64,3 @@ class CategoryController extends Controller
         return redirect()->back()->with('success', 'تم حذف الفئة بنجاح.');
     }
 }
-

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\Product\StoreProductRequest;
-use App\Http\Requests\admin\Product\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\admin\Product\StoreProductRequest;
+use App\Http\Requests\admin\Product\UpdateProductRequest;
 
 class ProductController extends Controller
 {
