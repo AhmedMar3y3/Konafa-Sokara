@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\OrderPayStatus;
+use App\Enums\OrderPayTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\AssignToDelegateRequest;
 use App\Models\Order;
@@ -13,7 +15,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with(['user', 'delegate'])
-            ->orderByRaw("CASE WHEN status = 'التجهيز' THEN 0 ELSE 1 END")
+            ->where(function($query){
+                $query->where('pay_type',OrderPayTypes::ONLINE->value)->where('pay_status', OrderPayStatus::PAIED->value);
+            })
+            ->orWhere('pay_type', OrderPayTypes::CASH->value)
+            ->orderBy('status', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
@@ -24,8 +30,9 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with(['user', 'delegate', 'items'])
-            ->findOrFail($id);
+        $order = Order::with(['user:id,first_name,last_name,phone,image', 
+                            'delegate:id,first_name,last_name,phone,image',
+                            'items','items.product','items.additions'])->findOrFail($id);
 
         return view("orders.show", compact("order"));
     }

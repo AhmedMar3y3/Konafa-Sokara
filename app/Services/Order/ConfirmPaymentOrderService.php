@@ -11,7 +11,7 @@ class ConfirmPaymentOrderService
 {
     public function confirmPayment(Order $order)
     {
-        if($order->pay_type == OrderPayTypes::ONLINE->value){
+        if($order->pay_type->value == OrderPayTypes::ONLINE->value){
             $order->update([
                 'pay_status' => OrderPayStatus::PAIED,
             ]);
