@@ -15,10 +15,10 @@ class OrderItemsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            //TODO We need to get the name of the product
-            'price' => $this->price,
-            'items' => OrderItemAdditionResource::collection($this->additions),
-
+            'product_name'      => $this->product->name,
+            'product_image'     => $this->product->image,
+            'item_additions'    => OrderItemAdditionResource::collection($this->additions),
+            'price'             => $this->total_price + $this->additions->sum('price') . ' ' . __('admin.rs'),
         ];
     }
 }

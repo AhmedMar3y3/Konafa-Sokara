@@ -41,7 +41,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 // profile routes //
     Route::get('/get-profile', [ProfileController::class, 'getProfile']);
     Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
-    Route::get('/my-orders', [ProfileController::class, 'myOrders']);
     Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
     Route::post('/change-password', [ProfileController::class, 'changePassword']);
     Route::get('/faqs', [ProfileController::class, 'faqs']);
@@ -66,5 +65,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //order
     Route::post('store-order'               ,[OrderController::class, 'store']);
+    Route::get('orders'                     ,[OrderController::class, 'orders']);
+    Route::get('orders/{order}'             ,[OrderController::class, 'showOrder']);
 
 });
