@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Order\OrderItemsService;
 use App\Services\Order\OrderPricesService;
+use App\Http\Resources\Api\User\Order\OrderResource;
 use App\Http\Resources\Api\User\Order\OrdersResource;
 use App\Http\Requests\Api\User\Order\StoreOrderRequest;
 
@@ -58,7 +59,13 @@ class OrderController extends Controller
     public function orders()
     {
         $orders = auth()->user()->orders;
-        $orders->load('items');
+        $orders->load(['items','items.product']);
         return $this->successWithDataResponse(OrdersResource::collection($orders));
+    }
+
+    public function showOrder(Order $order)
+    {
+        $order->load(['items','items.product','items.additions']);
+        return $this->successWithDataResponse(new OrderResource($order));
     }
 }

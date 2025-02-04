@@ -66,5 +66,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //order
     Route::post('store-order'               ,[OrderController::class, 'store']);
     Route::get('orders'                     ,[OrderController::class, 'orders']);
+    Route::get('orders/{order}'             ,[OrderController::class, 'showOrder']);
 
 });
