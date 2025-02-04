@@ -34,12 +34,6 @@ class ProfileController extends Controller
         return $this->successWithDataResponse(new ProfileResource($user));
     }
 
-    // public function myOrders()
-    // {
-    //     $orders = auth()->user()->orders;
-    //     return $this->successWithDataResponse(new OrderResource($orders));
-    // }
-
     public function deleteAccount(DeleteAccountRequest $request)
     {
         $user = Auth::user();
