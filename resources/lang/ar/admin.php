@@ -30,4 +30,7 @@ return [
     'delegate_phone'        => 'رقم المندوب',
     'no_delegate'           => 'لم يتم تعيين مندوب',
     'delivery_location'     => 'موقع التوصيل',
+    'points_per_SAR'        => 'عدد النقاط لكل ريال سعودي',
+    'points_per_invitation' => 'عدد النقاط لكل دعوة',
+    'points_per_app_rating' => 'عدد النقاط لتقييم التطبيق',
 ];
