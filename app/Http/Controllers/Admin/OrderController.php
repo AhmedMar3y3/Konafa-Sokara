@@ -15,7 +15,6 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with(['user', 'delegate'])
-            ->orderBy( 'status' , 'asc')
             ->where(function ($query) {
                 $query->where('pay_type', OrderPayTypes::ONLINE->value)->where('pay_status', OrderPayStatus::PAIED->value);
             })
