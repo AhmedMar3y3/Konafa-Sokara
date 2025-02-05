@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Enums\OrderPayTypes;
 use App\Models\Order;
 use App\Models\Address;
-use Illuminate\Http\Request;
+use App\Enums\OrderPayTypes;
 use App\Traits\HttpResponses;
-use App\Enums\PaymentTransactions;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Order\OrderItemsService;
 use App\Services\Order\OrderPricesService;
-use App\Services\PaymentGateway\PaymentService;
+use App\Http\Resources\Api\User\Order\OrderResource;
+use App\Http\Resources\Api\User\Order\OrdersResource;
 use App\Http\Requests\Api\User\Order\StoreOrderRequest;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -21,6 +20,11 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request){
         $user = auth()->user();
+
+        if(! $user->carts()->exists()){
+            return $this->failureResponse('السله فارغه');
+        }
+        
         try{
             DB::beginTransaction();
             $addressData = $this->getAddressData($request->address_id);
@@ -50,5 +54,18 @@ class OrderController extends Controller
 
     private function getAddressData($address_id){
         return Address::find($address_id,['lat','lng','map_desc','title'])->toArray();
+    }
+
+    public function orders()
+    {
+        $orders = auth()->user()->orders;
+        $orders->load(['items','items.product']);
+        return $this->successWithDataResponse(OrdersResource::collection($orders));
+    }
+
+    public function showOrder(Order $order)
+    {
+        $order->load(['items','items.product','items.additions']);
+        return $this->successWithDataResponse(new OrderResource($order));
     }
 }

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\AssignToDelegateRequest;
 use App\Models\Order;
 use App\Models\Delegate;
 use App\Enums\OrderStatus;
+use App\Enums\OrderPayTypes;
+use App\Enums\OrderPayStatus;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\admin\AssignToDelegateRequest;
 
 class OrderController extends Controller
 {
@@ -14,6 +16,11 @@ class OrderController extends Controller
     {
         $orders = Order::with(['user', 'delegate'])
             ->orderBy( 'status' , 'asc')
+            ->where(function ($query) {
+                $query->where('pay_type', OrderPayTypes::ONLINE->value)->where('pay_status', OrderPayStatus::PAIED->value);
+            })
+            ->orWhere('pay_type', OrderPayTypes::CASH->value)
+            ->orderBy('status', 'asc')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
@@ -24,8 +31,13 @@ class OrderController extends Controller
 
     public function show($id)
     {
-        $order = Order::with(['user', 'delegate', 'items'])
-            ->findOrFail($id);
+        $order = Order::with([
+            'items',
+            'items.product',
+            'items.additions',
+            'user:id,first_name,last_name,phone,image',
+            'delegate:id,first_name,last_name,phone,image'
+        ])->findOrFail($id);
 
         return view("orders.show", compact("order"));
     }

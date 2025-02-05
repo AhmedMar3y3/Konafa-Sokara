@@ -29,7 +29,6 @@ Route::post('/reset-password'               ,[ResetPasswordController::class, 'r
 // home routes //
 Route::get('/categories'     , [HomeController::class, 'categories']);
 Route::get('/categories/{categoryId}/subcategory/{subcategoryId?}', [HomeController::class, 'products']);
-Route::get('/newest-products', [HomeController::class, 'newestProducts']);
 Route::get('/offers', [HomeController::class, 'offers']);
 Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
 Route::get('/banners', [HomeController::class, 'banners']);
@@ -42,7 +41,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 // profile routes //
     Route::get('/get-profile', [ProfileController::class, 'getProfile']);
     Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
-    Route::get('/my-orders', [ProfileController::class, 'myOrders']);
     Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
     Route::post('/change-password', [ProfileController::class, 'changePassword']);
     Route::get('/faqs', [ProfileController::class, 'faqs']);
@@ -54,6 +52,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/favourites', [FavouriteController::class, 'index']);
     Route::post('/toggle-favourite/{id}', [FavouriteController::class, 'toggleFavorite']);
 
+    // prize products
+    Route::get('/prize-products', [HomeController::class, 'prizeProducts']);
+    // prize products
+
     // cart
     Route::post('/add-to-cart'              ,[CartController::class , 'addToCart']);
     Route::get('/cart-summary'              ,[CartController::class , 'cartSummary']);
@@ -63,5 +65,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //order
     Route::post('store-order'               ,[OrderController::class, 'store']);
+    Route::get('orders'                     ,[OrderController::class, 'orders']);
+    Route::get('orders/{order}'             ,[OrderController::class, 'showOrder']);
 
 });

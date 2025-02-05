@@ -8,6 +8,7 @@ use App\Services\Order\ConfirmOrderService;
 use App\Services\Order\ConfirmPaymentOrderService;
 use Faker\Provider\ar_EG\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentService
 {
@@ -82,12 +83,18 @@ class PaymentService
 			]);
         }
 
-        // Update the transaction status.
-        $transaction->update([
-            'status' => 'completed'
-        ]);
-        if ($transaction->type == PaymentTransactions::PAY_ORDER->value) {
-            (new ConfirmPaymentOrderService())->confirmPayment($transaction->trans);
+        DB::beginTransaction();
+        try
+        {
+            $transaction->update([
+                'status' => 'completed'
+            ]);
+            if ($transaction->type == PaymentTransactions::PAY_ORDER->value) {
+                (new ConfirmPaymentOrderService())->confirmPayment($transaction->trans);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
         }
 
         // Return the success view.

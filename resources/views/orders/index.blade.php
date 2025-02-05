@@ -65,7 +65,7 @@
                         </a>
                     </div>
                 </td>
-                <td>{{ $order->status }}</td>
+                <td>{{ __('order.'.$order->status->name) }}</td>
                 <td>
                     @if($order->delegate)
                     {{ $order->delegate->first_name }} {{ $order->delegate->last_name }}
@@ -73,7 +73,7 @@
                     لم يتم التعيين
                     @endif
                 </td>
-                <td>{{ $order->pay_type == 0 ? 'كاش' : 'اونلاين' }}</td>
+                <td>{{ __('order.'.$order->pay_type->name) }}</td>
                 <td>{{ number_format($order->total_price, 2) }}</td>
                 <td>{{ $order->id }}</td>
             </tr>

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Addition;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\Addition\StoreAdditionRequest;
 use App\Http\Requests\admin\Addition\UpdateAdditionRequest;
-use Illuminate\Http\Request;
-use App\Models\Addition;
-use App\Models\Category;
 
 class AdditionController extends Controller
 {
