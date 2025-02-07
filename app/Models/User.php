@@ -101,9 +101,20 @@ class User extends Authenticatable
 
 
     public function updateLocation($data): void
-    {
-        $this->update($data + ['completed_info' => true]);
-    }
+{
+    $this->update($data + ['completed_info' => true]);
+
+    $this->addresses()->updateOrCreate(
+        ['title' => 'default'],
+        [
+            'lat'      => $data['lat'],
+            'lng'      => $data['lng'],
+            'map_desc' => $data['map_desc'],
+            'title'    => 'default',
+        ]
+    );
+}
+
 
     public function markAsVerified()
     {
@@ -169,4 +180,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class, 'favourites', 'user_id', 'product_id');
     }
 
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
 }
