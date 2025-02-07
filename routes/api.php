@@ -8,7 +8,9 @@ use App\Http\Controllers\Api\User\ProfileController;
 use App\Http\Controllers\Api\User\FavouriteController;
 use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\ResetPasswordController;
+use App\Http\Controllers\Api\User\AddressController;
 use App\Services\PaymentGateway\PaymentService;
+
 
 Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@register');
 
@@ -67,5 +69,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('store-order'               ,[OrderController::class, 'store']);
     Route::get('orders'                     ,[OrderController::class, 'orders']);
     Route::get('orders/{order}'             ,[OrderController::class, 'showOrder']);
+
+    // Address Routes
+    Route::get('/addresses'                  ,[AddressController::class, 'index']);
+    Route::post('/store-address'             ,[AddressController::class, 'store']);
+    Route::delete('/delete-address/{id}'     ,[AddressController::class, 'destroy']);
 
 });

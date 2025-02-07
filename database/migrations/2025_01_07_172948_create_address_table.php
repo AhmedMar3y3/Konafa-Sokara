@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('lng');
             $table->string('map_desc');
             $table->string('title');
+            $table->timestamps();
         });
     }
 
