@@ -16,9 +16,32 @@
         @csrf
         @method('PUT')
 
+        <!-- Delivery Price Setting -->
         <div class="mb-3">
-            <label for="delivery_price" class="form-label text-end" style="color: black">سعر التوصيل</label>
-            <input type="number" name="delivery_price" class="form-control text-end" id="delivery_price" value="{{ $deliveryPrice->value ?? '' }}" required>
+            <label for="delivery_price" class="form-label text-end" style="color: black">{{ __('admin.delivery_price') }}</label>
+            <input type="number" name="delivery_price" class="form-control text-end" id="delivery_price" 
+                   value="{{ $data['delivery_price'] ?? '' }}" required>
+        </div>
+
+        <!-- Points per 1 SAR -->
+        <div class="mb-3">
+            <label for="points_per_sar" class="form-label text-end" style="color: black">{{ __('admin.points_per_SAR') }}</label>
+            <input type="number" name="points_per_sar" class="form-control text-end" id="points_per_sar" 
+                   value="{{ $data['points_per_sar'] ?? '' }}" required>
+        </div>
+
+        <!-- Points per Friend Invitation -->
+        <div class="mb-3">
+            <label for="points_per_friend_invitation" class="form-label text-end" style="color: black">{{ __('admin.points_per_invitation') }}</label>
+            <input type="number" name="points_per_friend_invitation" class="form-control text-end" id="points_per_friend_invitation" 
+                   value="{{ $data['points_per_friend_invitation'] ?? '' }}" required>
+        </div>
+
+        <!-- Points per Application Rating -->
+        <div class="mb-3">
+            <label for="points_per_app_rating" class="form-label text-end" style="color: black">{{ __('admin.points_per_app_rating') }}</label>
+            <input type="number" name="points_per_app_rating" class="form-control text-end" id="points_per_app_rating" 
+                   value="{{ $data['points_per_app_rating'] ?? '' }}" required>
         </div>
 
         <button type="submit" class="btn btn-primary">حفظ</button>

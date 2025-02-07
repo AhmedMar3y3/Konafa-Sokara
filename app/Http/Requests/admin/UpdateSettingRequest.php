@@ -23,10 +23,26 @@ class UpdateSettingRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'delivery_price' => [
+            'delivery_price'               => [
                 'required',
                 'numeric',
                 'min:0',
+            ],
+
+            'points_per_sar'               => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
+            'points_per_friend_invitation' => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
+            'points_per_app_rating'         => [
+                'required',
+                'numeric',
+                'min:0'
             ],
         ];
     }
