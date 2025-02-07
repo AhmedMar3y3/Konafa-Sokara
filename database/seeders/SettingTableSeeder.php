@@ -19,6 +19,18 @@ class SettingTableSeeder extends Seeder
                 'key' => 'delivery_price',
                 'value' => 50,
             ],
+            [
+                'key' => 'points_per_sar',
+                'value' => 2,
+            ],
+            [
+                'key' => 'points_per_friend_invitation',
+                'value' => 10,
+            ],
+            [
+                'key' => 'points_per_app_rating',
+                'value' => 10,
+            ],
         ];
 
         DB::table('settings')->insert($settings);
