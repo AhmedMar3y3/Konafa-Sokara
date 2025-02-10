@@ -204,7 +204,7 @@
                         <div class="card-body">
                             <div class="mb-3 d-flex justify-content-center align-items-center">
                                 <div id="imageContainer" class="image-upload-square border">
-                                    <img id="previewImage" src="{{ $order->user->image }}" 
+                                    <img id="previewImage" src="{{ $order->delegate->image }}" 
                                             alt="Image Preview" 
                                             style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
                                 </div>
