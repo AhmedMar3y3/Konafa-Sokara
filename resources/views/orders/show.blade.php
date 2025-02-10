@@ -210,12 +210,12 @@
                                 </div>
                             </div>
                             <div class="row mb-1">
-                                <div class="col-4">{{ $order->user->first_name }} {{ $order->user->last_name }}</div>
+                                <div class="col-4">{{ $order->delegate->first_name }} {{ $order->delegate->last_name }}</div>
                                 <div class="col-8">{{ __('admin.delegate_name') }}</div>
                             </div>
 
                             <div class="row mb-1">
-                                <div class="col-4">{{ $order->user->phone }}</div>
+                                <div class="col-4">{{ $order->delegate->phone }}</div>
                                 <div class="col-8">{{ __('admin.delegate_phone') }}</div>
                             </div>
                         </div>
