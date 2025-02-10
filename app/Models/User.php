@@ -161,7 +161,7 @@ class User extends Authenticatable
 
     public function hasNoOrdersOrCompletedOrders()
     {
-        return !$this->orders()->exists() || $this->orders()->where('status', 3)->exists();
+        return !$this->orders()->exists() || $this->orders()->where('status', 2)->exists();
     }
 
     public function changePassword(string $newPassword): void
