@@ -2,6 +2,13 @@
 
 
 return [
+    "users"                 => "المستخدمين",
+    "products"              => "المنتجات",
+    "code"                  => "كود التسجيل",
+    "delegates"             => "المندوبين",
+    "orders"                => "الطلبات",
+    "new_users"             => "المستخدمين الجدد ",
+    "last_week"             => "| اخر اسبوع",
     'image'                 => 'الصورة',
     'show'                  => 'عرض',
     'order_details'         => 'تفاصيل الطلب',
@@ -14,7 +21,7 @@ return [
     'rs'                    => 'ريال سعودي',
     'pay_type'              => 'طريقه الدفع',
     'pay_status'            => 'حالة الدفع',
-    'products_details'       => 'تفاصيل المنتجات',
+    'products_details'      => 'تفاصيل المنتجات',
     'product_name'          => 'اسم المنتج',
     'product_price'         => 'سعر المنتج',
     'product_quantity'      => 'كمية المنتج',
@@ -33,5 +40,5 @@ return [
     'points_per_SAR'        => 'عدد النقاط لكل ريال سعودي',
     'points_per_invitation' => 'عدد النقاط لكل دعوة',
     'points_per_app_rating' => 'عدد النقاط لتقييم التطبيق',
-    'unknown_or_deleted' => 'الحساب غير موجود او تم حذفه',
+    'unknown_or_deleted'    => 'الحساب غير موجود او تم حذفه',
 ];

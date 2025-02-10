@@ -165,33 +165,33 @@
                     <h5 class="">{{ __('admin.user_details') }} <i class="fa fa-user"></i></h5>
                 </div>
                 <hr>
-    
                 @if ($order->user)
+
                 <div class="card-content">
                     <div class="card-body">
-                            <div class="mb-3 d-flex justify-content-center align-items-center">
-                                <div id="imageContainer" class="image-upload-square border">
-                                    <img id="previewImage" src="{{ $order->user->image }}" 
-                                            alt="Image Preview" 
-                                            style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
-                                </div>
+                        <div class="mb-3 d-flex justify-content-center align-items-center">
+                            <div id="imageContainer" class="image-upload-square border">
+                                <img id="previewImage" src="{{ $order->user->image }}" 
+                                        alt="Image Preview" 
+                                        style="max-width: 100%; max-height: 100%; border-radius: 5px;" />
                             </div>
-                            <div class="row mb-1">
-                                <div class="col-4">{{ $order->user->first_name }} {{ $order->user->last_name }}</div>
-                                <div class="col-8">{{ __('admin.user_name') }}</div>
-                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <div class="col-4">{{ $order->user->first_name }} {{ $order->user->last_name }}</div>
+                            <div class="col-8">{{ __('admin.user_name') }}</div>
+                        </div>
 
-                            <div class="row mb-1">
-                                <div class="col-4">{{ $order->user->phone }}</div>
-                                <div class="col-8">{{ __('admin.user_phone') }}</div>
-                            </div>
-                        @else
-                            <div class="text-center p-4">
-                                <h4>{{ __('unknown_or_deleted') }}</h4>
-                            </div>
-                        @endif
+                        <div class="row mb-1">
+                            <div class="col-4">{{ $order->user->phone }}</div>
+                            <div class="col-8">{{ __('admin.user_phone') }}</div>
+                        </div>
                     </div>
                 </div>
+                @else
+                <div class="text-center p-4">
+                    <h4>{{ __('admin.unknown_or_deleted') }}</h4>
+                </div>
+                @endif
             </div>
 
             <div class="card mt-4 mb-4">

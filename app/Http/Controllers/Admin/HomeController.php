@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Category;
 use App\Models\Addition;
 use App\Models\Delegate;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 
 class HomeController extends Controller
 {
@@ -19,7 +19,7 @@ class HomeController extends Controller
         $orders = Order::count();
         $products = Product::count();
         $additions = Addition::count();
-        $categories = Category::where('parent_id',null)->count();
+        $code = Admin::where('id', auth('admin')->id())->first()->code;
         $delegates = Delegate::where('is_active', 1)->count();
         $last7DaysUsers = collect();
         for ($i = 6; $i >= 0; $i--) {
@@ -30,6 +30,6 @@ class HomeController extends Controller
 
         
 
-        return view('dashboard', compact('products', 'categories', 'delegates', 'users', 'orders', 'additions', 'last7DaysUsers'));
+        return view('dashboard', compact('products', 'code', 'delegates', 'users', 'orders', 'additions', 'last7DaysUsers'));
     }
 }
