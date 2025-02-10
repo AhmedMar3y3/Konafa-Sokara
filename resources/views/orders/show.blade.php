@@ -166,9 +166,9 @@
                 </div>
                 <hr>
     
+                @if ($order->user)
                 <div class="card-content">
                     <div class="card-body">
-                        @if ($order->user)
                             <div class="mb-3 d-flex justify-content-center align-items-center">
                                 <div id="imageContainer" class="image-upload-square border">
                                     <img id="previewImage" src="{{ $order->user->image }}" 
