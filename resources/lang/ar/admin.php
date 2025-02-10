@@ -33,4 +33,5 @@ return [
     'points_per_SAR'        => 'عدد النقاط لكل ريال سعودي',
     'points_per_invitation' => 'عدد النقاط لكل دعوة',
     'points_per_app_rating' => 'عدد النقاط لتقييم التطبيق',
+    'unknown_or_deleted' => 'الحساب غير موجود او تم حذفه',
 ];
