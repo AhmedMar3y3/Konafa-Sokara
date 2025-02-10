@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Delegate;
+namespace App\Http\Controllers\Api\Delegate;
 
 use App\Models\Admin;
 use App\Models\Delegate;

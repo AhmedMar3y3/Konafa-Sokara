@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Delegate\AuthController;
+use App\Http\Controllers\Api\Delegate\AuthController;
 
 
 
-//////////////////////////////////////// User Routes ////////////////////////////////////////
+//////////////////////////////////////// Delegate Routes ////////////////////////////////////////
 //public routes
 Route::post('/register'                     ,[AuthController::class, 'register']);
 Route::post('/verify-email'                 ,[AuthController::class, 'verifyEmail']);
