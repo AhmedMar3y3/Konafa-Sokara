@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Models\Banner;
+use App\Models\Setting;
 use App\Models\Product;
 use App\Models\Category;
 use App\Traits\HttpResponses;
@@ -26,7 +27,7 @@ class HomeController extends Controller
 
     public function products($categoryId, $subcategoryId = null)
     {
-        $products = Product::getProductsByCategory($categoryId, $subcategoryId, request()->query('price'),request()->query('search'));
+        $products = Product::getProductsByCategory($categoryId, $subcategoryId, request()->query('price'), request()->query('search'));
         return $this->successWithDataResponse(ProductResource::collection($products));
     }
 
@@ -39,7 +40,8 @@ class HomeController extends Controller
         return $this->successWithDataResponse(new ProductDetailsResource($product));
     }
 
-    public function banners(){
+    public function banners()
+    {
         $banners = Banner::get(['id', 'image']);
         return $this->successWithDataResponse($banners);
     }
@@ -55,14 +57,27 @@ class HomeController extends Controller
     public function mostSoldProducts()
     {
         $products = Product::withSum('orderItems as total_quantity', 'quantity')
-                            ->orderBy('total_quantity', 'desc')
-                            ->get();
+            ->orderBy('total_quantity', 'desc')
+            ->get();
 
         return $this->successWithDataResponse(MostSoldProductResource::collection($products));
     }
 
-    public function prizeProducts(){
+    public function prizeProducts()
+    {
         $products = Product::where('can_apply_prize', true)->get();
         return $this->successWithDataResponse(PrizeProductResource::collection($products));
+    }
+
+    public function settingPoints()
+    {
+        $settings = Setting::get(['key', 'value']);
+        return $this->successWithDataResponse($settings);
+    }
+
+    public function userPoints()
+    {
+        $user = auth()->user();
+        return $this->successWithDataResponse(['points' => $user->points]);
     }
 }

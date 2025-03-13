@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         $user->markAsVerified();
         return $this->successWithDataResponse(UserResource::make($user)->setToken($user->login()));
-    }
+    } 
 
 
     // Resend verification code

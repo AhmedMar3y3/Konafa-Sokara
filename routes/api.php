@@ -28,49 +28,46 @@ Route::post('/reset-password-send-code'     ,[ResetPasswordController::class, 's
 Route::post('/reset-password-check-code'    ,[ResetPasswordController::class, 'checkCode']);
 Route::post('/reset-password'               ,[ResetPasswordController::class, 'resetPassword']);
 
-// home routes //
-Route::get('/categories'     , [HomeController::class, 'categories']);
-Route::get('/categories/{categoryId}/subcategory/{subcategoryId?}', [HomeController::class, 'products']);
-Route::get('/offers', [HomeController::class, 'offers']);
-Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
-Route::get('/banners', [HomeController::class, 'banners']);
 
 //protected routes
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('set-location', [AuthController::class, 'setLocation']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/logout',      [AuthController::class, 'logout']);
 
-// profile routes //
-    Route::get('/get-profile', [ProfileController::class, 'getProfile']);
-    Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
-    Route::post('/delete-account', [ProfileController::class, 'deleteAccount']);
+    // profile routes //
+    Route::get('/get-profile',      [ProfileController::class, 'getProfile']);
+    Route::post('/update-profile',  [ProfileController::class, 'updateProfile']);
+    Route::post('/delete-account',  [ProfileController::class, 'deleteAccount']);
     Route::post('/change-password', [ProfileController::class, 'changePassword']);
-    Route::get('/faqs', [ProfileController::class, 'faqs']);
+    Route::get('/faqs',             [ProfileController::class, 'faqs']);
+    
+    // home routes //
+    Route::get('/categories'     ,    [HomeController::class, 'categories']);
+    Route::get('/categories/{categoryId}/subcategory/{subcategoryId?}', [HomeController::class, 'products']);
+    Route::get('/offers',             [HomeController::class, 'offers']);
+    Route::get('/most-sold-products', [HomeController::class, 'mostSoldProducts']);
+    Route::get('/banners',            [HomeController::class, 'banners']);
+    Route::get('/product/{id}',       [HomeController::class, 'showProduct']);
+    Route::get('/prize-products',     [HomeController::class, 'prizeProducts']);
+    Route::get('/settings',           [HomeController::class, 'settings']);
+    Route::get('/points',           [HomeController::class, 'userPoints']);
 
-// home routes //
-    Route::get('/product/{id}', [HomeController::class, 'showProduct']);
-
-// favourite routes //
-    Route::get('/favourites', [FavouriteController::class, 'index']);
+    // favourite routes //
+    Route::get('/favourites',             [FavouriteController::class, 'index']);
     Route::post('/toggle-favourite/{id}', [FavouriteController::class, 'toggleFavorite']);
 
-    // prize products
-    Route::get('/prize-products', [HomeController::class, 'prizeProducts']);
-    // prize products
-
-    // cart
+    // cart routes //
     Route::post('/add-to-cart'              ,[CartController::class , 'addToCart']);
     Route::get('/cart-summary'              ,[CartController::class , 'cartSummary']);
     Route::post('/update-cart'              ,[CartController::class , 'updateCart']);
     Route::post('delete-cart'               ,[CartController::class , 'deleteCart']);
-    // cart
 
-    //order
+    // order routes //
     Route::post('store-order'               ,[OrderController::class, 'store']);
     Route::get('orders'                     ,[OrderController::class, 'orders']);
     Route::get('orders/{order}'             ,[OrderController::class, 'showOrder']);
 
-    // Address Routes
+    // Address Routes //
     Route::get('/addresses'                  ,[AddressController::class, 'index']);
     Route::post('/store-address'             ,[AddressController::class, 'store']);
     Route::delete('/delete-address/{id}'     ,[AddressController::class, 'destroy']);

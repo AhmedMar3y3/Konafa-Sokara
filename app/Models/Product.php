@@ -32,10 +32,7 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    // public function hasOrders()
-    // {
-    //     return $this->orders()->where('status','!=', 3)->exists();
-    // }
+
 
     public function orderItems()
     {
@@ -64,7 +61,8 @@ class Product extends Model
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', '%' . $search . '%');
             })
-            ->get(['id', 'name', 'price', 'image']);    }
+            ->get(['id', 'name', 'price', 'image']);
+    }
 
     public function favoritedBy()
     {
@@ -78,10 +76,11 @@ class Product extends Model
 
     public function additions()
     {
-        return $this->hasManyThrough(Addition::class, Category::class, 'id', 'category_id', 'category_id', 'id');   
+        return $this->hasManyThrough(Addition::class, Category::class, 'id', 'category_id', 'category_id', 'id');
     }
 
-    public function getPriceAfterDiscountAttribute(){
+    public function getPriceAfterDiscountAttribute()
+    {
         return $this->has_discount ? $this->discount_price : $this->price;
     }
 }
