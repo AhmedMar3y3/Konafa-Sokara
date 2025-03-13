@@ -49,8 +49,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/banners',            [HomeController::class, 'banners']);
     Route::get('/product/{id}',       [HomeController::class, 'showProduct']);
     Route::get('/prize-products',     [HomeController::class, 'prizeProducts']);
-    Route::get('/settings',           [HomeController::class, 'settings']);
-    Route::get('/points',           [HomeController::class, 'userPoints']);
+    Route::get('/settings',           [HomeController::class, 'settingPoints']);
+    Route::get('/points',             [HomeController::class, 'userPoints']);
 
     // favourite routes //
     Route::get('/favourites',             [FavouriteController::class, 'index']);
