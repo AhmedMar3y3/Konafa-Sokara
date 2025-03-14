@@ -33,4 +33,16 @@ class PointsController extends Controller
         }
         return $this->failureResponse('لقد قمت بتقييم التطبيق مسبقا');
     }
+    public function undoRating()
+    {
+        $user = auth()->user();
+        if ($user->rated_app) {
+            $user->update([
+                'rated_app' => false,
+                'points' => $user->points - Setting::where('key', 'points_per_app_rating')->value('value')
+            ]);
+            return $this->successResponse('تم إلغاء التقييم بنجاح');
+        }
+        return $this->failureResponse('لقد قمت بإلغاء التقييم مسبقا');
+    }
 }

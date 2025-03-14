@@ -55,6 +55,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/settings',           [PointsController::class, 'settingPoints']);
     Route::get('/points',             [PointsController::class, 'userPoints']);
     Route::post('/rate-app',          [PointsController::class, 'rateApp']);
+    Route::post('/undo',              [PointsController::class, 'undoRating']);
 
 
     // favourite routes //
