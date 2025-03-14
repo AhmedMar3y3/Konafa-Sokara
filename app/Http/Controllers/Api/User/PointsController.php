@@ -27,7 +27,7 @@ class PointsController extends Controller
         if (!$user->rated_app) {
             $user->update([
                 'rated_app' => true,
-                'points' => $user->points + Setting::where('key', 'points_per_app_rating')->value
+                'points' => $user->points + Setting::where('key', 'points_per_app_rating')->value('value')
             ]);
             return $this->successResponse('تم تقييم التطبيق بنجاح');
         }
