@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Models\Banner;
-use App\Models\Setting;
 use App\Models\Product;
 use App\Models\Category;
 use App\Traits\HttpResponses;
@@ -67,17 +66,5 @@ class HomeController extends Controller
     {
         $products = Product::where('can_apply_prize', true)->get();
         return $this->successWithDataResponse(PrizeProductResource::collection($products));
-    }
-
-    public function settingPoints()
-    {
-        $settings = Setting::get(['key', 'value']);
-        return $this->successWithDataResponse($settings);
-    }
-
-    public function userPoints()
-    {
-        $user = auth()->user();
-        return $this->successWithDataResponse(['points' => $user->points]);
     }
 }

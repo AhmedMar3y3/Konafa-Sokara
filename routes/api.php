@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\User\FavouriteController;
 use App\Http\Controllers\Api\User\OrderController;
 use App\Http\Controllers\Api\User\ResetPasswordController;
 use App\Http\Controllers\Api\User\AddressController;
+use App\Http\Controllers\Api\User\PointsController;
 use App\Services\PaymentGateway\PaymentService;
 
 
@@ -16,12 +17,12 @@ Route::post('/register-admin', 'App\Http\Controllers\Admin\AuthController@regist
 
 //////////////////////////////////////// User Routes ////////////////////////////////////////
 //public routes
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register',     [AuthController::class, 'register']);
 Route::post('/verify-email', [AuthController::class, 'verifyEmail']);
-Route::post('/resend-code', [AuthController::class, 'resendCode']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/resend-code',  [AuthController::class, 'resendCode']);
+Route::post('/login',        [AuthController::class, 'login']);
 
-Route::get('payment/get-payment-status'                 ,[PaymentService::class, 'callback'])->name('payment.getPaymentStatus');
+Route::get('payment/get-payment-status'     ,[PaymentService::class, 'callback'])->name('payment.getPaymentStatus');
 
 // reset password //
 Route::post('/reset-password-send-code'     ,[ResetPasswordController::class, 'sendCode']);
@@ -49,8 +50,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/banners',            [HomeController::class, 'banners']);
     Route::get('/product/{id}',       [HomeController::class, 'showProduct']);
     Route::get('/prize-products',     [HomeController::class, 'prizeProducts']);
-    Route::get('/settings',           [HomeController::class, 'settingPoints']);
-    Route::get('/points',             [HomeController::class, 'userPoints']);
+    
+    // Points routes
+    Route::get('/settings',           [PointsController::class, 'settingPoints']);
+    Route::get('/points',             [PointsController::class, 'userPoints']);
+    Route::post('/rate-app',          [PointsController::class, 'rateApp']);
+
 
     // favourite routes //
     Route::get('/favourites',             [FavouriteController::class, 'index']);
