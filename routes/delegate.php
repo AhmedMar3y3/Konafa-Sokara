@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Delegate\AuthController;
+use App\Http\Controllers\Api\Delegate\ProfileController;
 
 
 
@@ -17,6 +18,13 @@ Route::post('/reset-password-check-code'    ,[AuthController::class, 'checkCode'
 
 Route::middleware(['auth.delegate'])->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout']);
-
+    // profile routes //
+    Route::post('/logout',          [AuthController::class, 'logout']);
+    Route::post('set-location',     [AuthController::class, 'setLocation']);
+    Route::get('/get-profile',      [ProfileController::class, 'getProfile']);
+    Route::post('/update-profile',  [ProfileController::class, 'updateProfile']);
+    Route::get('/faqs',             [ProfileController::class, 'faqs']);
+    Route::get('/my-orders',        [ProfileController::class, 'myOrders']);
+    Route::get('/notifications',    [ProfileController::class, 'getNotifications']);
+    Route::post('/update-token', [ProfileController::class, 'updateToken']);
 });

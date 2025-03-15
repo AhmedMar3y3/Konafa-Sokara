@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Traits\HasImage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 
-class Delegate extends Model
+class Delegate extends Authenticatable
 {
     use HasFactory, SoftDeletes, HasImage, HasApiTokens, Notifiable;
 
@@ -27,6 +27,13 @@ class Delegate extends Model
         'code_expire',
         'is_verified',
         'admin_code',
+        'fcm_token',
+        'lat',
+        'lng',
+        'map_desc',
+        'title',
+        'completed_info',
+        'birth_date',
     ];
 
     protected $hidden = [
@@ -102,9 +109,28 @@ class Delegate extends Model
         return Hash::check($password, $this->password);
     }
 
+    public function updateLocation($data): void
+    {
+        $this->update($data + ['completed_info' => true]);
+    
+        $this->update(
+            ['title' => 'default'],
+            [
+                'lat'      => $data['lat'],
+                'lng'      => $data['lng'],
+                'map_desc' => $data['map_desc'],
+                'title'    => 'default',
+            ]
+        );
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
+    }
 }

@@ -5,15 +5,16 @@ namespace App\Http\Controllers\Api\Delegate;
 use App\Models\Admin;
 use App\Models\Delegate;
 use App\Traits\HttpResponses;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\Api\Delegate\DelegateResource;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Delegate\LoginRequest;
 use App\Http\Requests\Api\Delegate\VerifyRequest;
 use App\Http\Requests\Api\Delegate\RegisterRequest;
 use App\Http\Requests\Api\Delegate\ResendCodeRequest;
+use App\Http\Resources\Api\Delegate\DelegateResource;
 use App\Http\Requests\Api\Delegate\ResetPasswordRequest;
+use App\Http\Requests\Api\Delegate\StoreLocationRequest;
 use App\Http\Requests\Api\Delegate\ResetPasswordSendCodeRequest;
 use App\Http\Requests\Api\Delegate\ResetPasswordCheckCodeRequest;
 
@@ -67,6 +68,13 @@ class AuthController extends Controller
         return $this->successResponse();
     }
 
+    public function setLocation(StoreLocationRequest $request)
+    {
+        $delegate = Auth('delegate')->user();
+        $delegate->updateLocation($request->validated());
+        return $this->successWithDataResponse(DelegateResource::make($delegate)->setToken(ltrim($request->header('authorization'), 'Bearer ')));
+    }
+
     //Login delegate
     public function login(LoginRequest $request)
     {
@@ -81,6 +89,11 @@ class AuthController extends Controller
         }
 
         $token = $delegate->login();
+
+        if (!$delegate->completed_info) {
+            return $this->incompletedUserResponse(DelegateResource::make($delegate)->setToken($token));
+        }
+
         return $this->successWithDataResponse(delegateResource::make($delegate)->setToken($token));
     }
     //Logout delegate
