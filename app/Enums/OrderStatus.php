@@ -5,8 +5,9 @@ namespace App\Enums;
 enum OrderStatus: int
 {
     case PREPARING = 0;
-    case SHIPPING = 1;
-    case DELIVERED = 2;
+    case WAITING = 1;
+    case SHIPPING = 2;
+    case DELIVERED = 3;
 
     public function formattedName(): string
     {

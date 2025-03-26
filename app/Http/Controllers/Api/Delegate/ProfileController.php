@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api\Delegate;
 
 use App\Models\Faq;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Api\User\FaqResource;
 use App\Http\Requests\Api\StoreFCMTokenRequest;
 use App\Http\Requests\Api\Delegate\UpdateProfileRequest;

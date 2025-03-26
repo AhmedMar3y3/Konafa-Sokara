@@ -22,6 +22,7 @@ class ProductDetailsResource extends JsonResource
             'price' => $this->price,
             'image' => $this->image,
             'recipe' => $this->recipe,
+            'can_apply_prize' => $this->can_apply_prize,
             'is_favorited' => $this->isFavorited(),
             'additions' => ProductAdditionResource::collection($this->category->additions ?? [])
         ];
