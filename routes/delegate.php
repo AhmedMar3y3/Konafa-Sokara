@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Delegate\AuthController;
+use App\Http\Controllers\Api\Delegate\HomeController;
+use App\Http\Controllers\Api\Delegate\OrderController;
 use App\Http\Controllers\Api\Delegate\ProfileController;
 
 
@@ -26,5 +28,17 @@ Route::middleware(['auth.delegate'])->group(function () {
     Route::get('/faqs',             [ProfileController::class, 'faqs']);
     Route::get('/my-orders',        [ProfileController::class, 'myOrders']);
     Route::get('/notifications',    [ProfileController::class, 'getNotifications']);
-    Route::post('/update-token', [ProfileController::class, 'updateToken']);
+    Route::post('/update-token',    [ProfileController::class, 'updateToken']);
+
+    // home routes //
+    Route::get('/new-orders',       [HomeController::class, 'newOrders']);
+    Route::get('/stats',            [HomeController::class, 'stats']);
+
+    // order routes //
+    Route::get('/orders',           [OrderController::class, 'filterOrders']);
+    Route::get('/order/{id}',       [OrderController::class, 'getOrderDetails']);
+    Route::post('/accept-order',    [OrderController::class, 'acceptOrder']);
+    Route::post('/reject-order',    [OrderController::class, 'rejectOrder']);
+    Route::post('/start-ride',      [OrderController::class, 'startRide']);
+    Route::post('/complete-order',  [OrderController::class, 'completeOrder']);
 });

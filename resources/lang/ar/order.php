@@ -3,6 +3,7 @@
 
 return [
     'PREPARING' => 'جاري التحضير',
+    'WAITING'   => 'قيد الانتظار',
     'SHIPPING'  => 'جاري الشحن',
     'DELIVERED' => 'تم التوصيل',
 

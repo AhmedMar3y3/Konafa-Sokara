@@ -45,7 +45,6 @@ class OrderController extends Controller
     {
         $order->update([
             'delegate_id' => $request->delegate_id,
-            'status' => OrderStatus::SHIPPING->value,
         ]);
 
         return redirect()->back()->with('success', 'تم تعيين المندوب بنجاح');

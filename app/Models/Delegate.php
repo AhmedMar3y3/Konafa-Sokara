@@ -129,6 +129,11 @@ class Delegate extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
+    public function rejectedOrders()
+    {
+        return $this->hasMany(RejectedOrders::class);
+    }
+
     public function routeNotificationForFcm()
     {
         return $this->fcm_token;
